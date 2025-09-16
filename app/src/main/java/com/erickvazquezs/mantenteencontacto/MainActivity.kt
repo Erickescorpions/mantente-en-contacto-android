@@ -1,11 +1,13 @@
 package com.erickvazquezs.mantenteencontacto
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.erickvazquezs.mantenteencontacto.databinding.ActivityMainBinding
+import com.erickvazquezs.mantenteencontacto.onboarding.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +26,10 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        // revisamos si ya se mostro el onboarding, si no lo mostramos
+        // para esta entrega siempre tendra que ver el onboarding
 
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
     }
 }

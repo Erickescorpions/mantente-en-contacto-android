@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MantenteEnContacto">
         <activity
+            android:name=".onboarding.GetStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.PrivacyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.PlacesAndContacts"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

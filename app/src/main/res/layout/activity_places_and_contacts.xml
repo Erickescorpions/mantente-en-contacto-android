@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/btnNext"
 
-        android:text="Para mantenerte en contacto con quienes elijas, podrás registrar los lugares que visitas con frecuencia."
+        android:text="@string/onboarding_pc_desc1"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
 
 
-        android:text="Tú decides quién recibe la notificación."
+        android:text="@string/onboarding_pc_desc2"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:text="Siguiente"
+        android:text="@string/onboarding_btn_next"
 
         android:layout_marginBottom="40dp"
 

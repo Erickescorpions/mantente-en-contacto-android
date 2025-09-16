@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MantenteEnContacto</string>
+    <string name="onboarding_welcome_title">¡Bienvenido!</string>
+    <string name="onboarding_welcome_desc1">"Mantente en contacto" es una aplicación que te notifica automáticamente cuando llegas a tu destino.</string>
+    <string name="onboarding_welcome_desc2">Olvídate de mandar mensajes uno por uno o de compartir tu ubicación en tiempo real.</string>
+    <string name="onboarding_welcome_start">Comenzar</string>
+
+    <string name="onboarding_pc_desc1">Para mantenerte en contacto con quienes elijas, podrás registrar los lugares que visitas con frecuencia.</string>
+    <string name="onboarding_pc_desc2">Tú decides quién recibe la notificación.</string>
+    <string name="onboarding_btn_next">Siguiente</string>
+
+    <string name="onboarding_privacy_desc1">Tu privacidad es lo más importante:</string>
+    <string name="onboarding_privacy_desc2">La app no comparte tu ubicación todo el tiempo, solo notifica la primera vez que llegas a tu destino.</string>
+
+    <string name="onboarding_get_started_desc1">¿Listo para empezar?</string>
+    <string name="onboarding_get_started_desc2">Crea una cuenta y mantente en contacto con quienes más quieres.</string>
+    <string name="onboarding_get_started_btn_login">Inicia sesion</string>
+    <string name="onboarding_get_started_btn_sign_up">Crear una cuenta</string>
+
+    <string name="auth_register_title">Crea tu cuenta</string>
+    <string name="auth_register_desc_avatar">Avatar de perfil, pulsa para cambiar</string>
+
+    <string name="auth_register_hint_username">Nombre de usuario</string>
+    <string name="auth_register_hint_phone">Número de teléfono</string>
+    <string name="auth_register_hint_password">Contraseña</string>
+    <string name="auth_register_hint_confirm_password">Confirmar contraseña</string>
+
+    <string name="auth_register_btn_create">Crear cuenta</string>
+    <string name="auth_register_btn_google">Iniciar sesión con Google</string>
+
+
+</resources>

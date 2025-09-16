@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".onboarding.GetStartActivity">
+    tools:context=".onboarding.GetStartedActivity">
 
     <TextView
         android:id="@+id/tvDescription"
@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/layoutAuthButtons"
 
-        android:text="Para mantenerte en contacto con quienes elijas, podrás registrar los lugares que visitas con frecuencia."
+        android:text="@string/onboarding_get_started_desc1"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
 
 
-        android:text="Tú decides quién recibe la notificación."
+        android:text="@string/onboarding_get_started_desc2"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -52,18 +52,16 @@
 
         <Button
             android:id="@+id/btnCreateAccount"
-            android:text="Crear cuenta"
+            android:text="@string/onboarding_get_started_btn_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:text="Iniciar sesión"
+            android:text="@string/onboarding_get_started_btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp" />
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

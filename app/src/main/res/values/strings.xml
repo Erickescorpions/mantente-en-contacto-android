@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">MantenteEnContacto</string>
+
+    <string name="onboarding_welcome_title">Welcome!</string>
+    <string name="onboarding_welcome_desc1">"Mantente en contacto" is an app that automatically notifies your groups when you arrive at your destination.</string>
+    <string name="onboarding_welcome_desc2">Forget about sending messages one by one or sharing your location in real time.</string>
+    <string name="onboarding_welcome_start">Get started</string>
+
+    <string name="onboarding_pc_desc1">To stay in touch with the people you choose, you can register the places you visit frequently.</string>
+    <string name="onboarding_pc_desc2">You decide who receives the notification.</string>
+    <string name="onboarding_btn_next">Next</string>
+
+    <string name="onboarding_privacy_desc1">Your privacy comes first:</string>
+    <string name="onboarding_privacy_desc2">The app does not share your location all the time, it only notifies the first time you arrive at your destination.</string>
+
+    <string name="onboarding_get_started_desc1">Ready to get started?</string>
+    <string name="onboarding_get_started_desc2">Create an account and stay in touch with the people who matter most.</string>
+    <string name="onboarding_get_started_btn_login">Log in</string>
+    <string name="onboarding_get_started_btn_sign_up">Sign up</string>
+
+    <string name="auth_register_title">Create your account</string>
+    <string name="auth_register_desc_avatar">Profile avatar, tap to change</string>
+
+    <string name="auth_register_hint_username">Username</string>
+    <string name="auth_register_hint_phone">Phone number</string>
+    <string name="auth_register_hint_password">Password</string>
+    <string name="auth_register_hint_confirm_password">Confirm password</string>
+
+    <string name="auth_register_btn_create">Create account</string>
+    <string name="auth_register_btn_google">Sign in with Google</string>
+
+
 </resources>

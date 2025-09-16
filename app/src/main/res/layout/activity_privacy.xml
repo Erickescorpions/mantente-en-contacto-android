@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/btnNext"
 
-        android:text="Tu privacidad es lo más importante:"
+        android:text="@string/onboarding_privacy_desc1"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
 
 
-        android:text="La app no comparte tu ubicación todo el tiempo, solo notifica la primera vez que llegas a tu destino."
+        android:text="@string/onboarding_privacy_desc2"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:text="Siguiente"
+        android:text="@string/onboarding_btn_next"
 
         android:layout_marginBottom="40dp"
 

@@ -17,9 +17,9 @@
         app:layout_constraintBottom_toTopOf="@id/btnStart"
 
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="30sp"
 
-        android:text="¡Bienvenido!"
+        android:text="@string/onboarding_welcome_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:text="Mantente en contacto es una aplicación que te notifica automáticamente cuando llegas a tu destino."
+        android:text="@string/onboarding_welcome_desc1"
 
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -45,8 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:text="Olvídate de mandar mensajes uno por uno o de compartir tu ubicación en tiempo real."
-
+        android:text="@string/onboarding_welcome_desc2"
         android:layout_marginTop="20dp"
         android:gravity="center"
 
@@ -60,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:text="Comenzar"
+        android:text="@string/onboarding_welcome_start"
 
         android:layout_marginBottom="40dp"
 

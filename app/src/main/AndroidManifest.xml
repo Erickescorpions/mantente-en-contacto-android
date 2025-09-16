@@ -15,7 +15,7 @@
             android:name=".auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.GetStartActivity"
+            android:name=".onboarding.GetStartedActivity"
             android:exported="false" />
         <activity
             android:name=".onboarding.PrivacyActivity"

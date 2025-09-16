@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.RegisterActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+
+                android:text="Crea tu cuenta"
+
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Avatar de perfil, pulsa para cambiar"
+                />
+
+            <ImageView
+                android:id="@+id/imgEditAvatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="20dp"
+
+                android:background="@drawable/bg_circle"
+                android:padding="8dp"
+                android:src="@drawable/pencil"
+                android:contentDescription="@string/desc_edit_avatar"/>
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username" />
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="Phone Number"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/etPassword"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:hint="Password"
+
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:hint="Confirm password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btnCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Crear cuenta" />
+
+            <Button
+                android:id="@+id/btnGoogle"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Iniciar sesion con google" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

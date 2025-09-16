@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MantenteEnContacto">
         <activity
+            android:name=".auth.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".onboarding.GetStartActivity"
             android:exported="false" />
         <activity

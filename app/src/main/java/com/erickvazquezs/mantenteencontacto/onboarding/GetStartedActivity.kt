@@ -34,7 +34,7 @@ class GetStartedActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            Toast.makeText(this, "Vista en construccion 👷🏻", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.coming_soon, Toast.LENGTH_SHORT).show()
         }
     }
 }

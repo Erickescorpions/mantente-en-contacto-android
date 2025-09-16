@@ -20,6 +20,7 @@
 
     <string name="auth_register_title">Crea tu cuenta</string>
     <string name="auth_register_desc_avatar">Avatar de perfil, pulsa para cambiar</string>
+    <string name="auth_register_desc_avatar_help">Pulsa sobre la imagen para elegir tu avatar</string>
 
     <string name="auth_register_hint_username">Nombre de usuario</string>
     <string name="auth_register_hint_phone">Número de teléfono</string>
@@ -29,5 +30,5 @@
     <string name="auth_register_btn_create">Crear cuenta</string>
     <string name="auth_register_btn_google">Iniciar sesión con Google</string>
 
-
+    <string name="coming_soon">¡Próximamente! 👷</string>
 </resources>

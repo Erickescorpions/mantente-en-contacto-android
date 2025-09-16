@@ -20,6 +20,7 @@
 
     <string name="auth_register_title">Create your account</string>
     <string name="auth_register_desc_avatar">Profile avatar, tap to change</string>
+    <string name="auth_register_desc_avatar_help">Tap the image to choose your avatar</string>
 
     <string name="auth_register_hint_username">Username</string>
     <string name="auth_register_hint_phone">Phone number</string>
@@ -29,5 +30,5 @@
     <string name="auth_register_btn_create">Create account</string>
     <string name="auth_register_btn_google">Sign in with Google</string>
 
-
+    <string name="coming_soon">Coming soon 👷🏻</string>
 </resources>

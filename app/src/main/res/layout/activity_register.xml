@@ -35,8 +35,7 @@
 
                 android:text="@string/auth_register_title"
 
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                style="@style/MainTitle" />
 
 
             <ImageView
@@ -54,11 +53,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tap on the image to choose your avatar"
-                android:textSize="10sp"
+                android:text="@string/auth_register_desc_avatar_help"
+                android:textSize="11sp"
                 android:layout_gravity="end"
                 android:textColor="@color/blue"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 />
 
             <EditText

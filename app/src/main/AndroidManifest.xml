@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MantenteEnContacto">
         <activity
+            android:name=".avatar.ChooseAvatarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".auth.RegisterActivity"
             android:exported="false" />
         <activity

@@ -31,4 +31,6 @@
     <string name="auth_register_btn_google">Iniciar sesión con Google</string>
 
     <string name="coming_soon">¡Próximamente! 👷</string>
+
+    <string name="avatar_choose_title">Escoge tu avatar</string>
 </resources>

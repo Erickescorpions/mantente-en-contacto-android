@@ -30,7 +30,13 @@
     <string name="auth_register_btn_create">Create account</string>
     <string name="auth_register_btn_google">Sign in with Google</string>
 
-    <string name="coming_soon">Coming soon 👷🏻</string>
+    <string name="error_username_required">Username is required</string>
+    <string name="error_phone_required">Phone number is required</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_password_mismatch">Passwords must match</string>
 
+    <string name="coming_soon">Coming soon 👷🏻</string>
     <string name="avatar_choose_title">Choose your avatar</string>
+
+    <string name="home_greeting">Hi %1$s</string>
 </resources>

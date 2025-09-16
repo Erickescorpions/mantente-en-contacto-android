@@ -30,7 +30,13 @@
     <string name="auth_register_btn_create">Crear cuenta</string>
     <string name="auth_register_btn_google">Iniciar sesión con Google</string>
 
-    <string name="coming_soon">¡Próximamente! 👷</string>
+    <string name="error_username_required">El campo nombre de usuario es requerido</string>
+    <string name="error_phone_required">El campo numero de telefono es requerido</string>
+    <string name="error_password_required">El campo contraseña es requerido</string>
+    <string name="error_password_mismatch">Ingresa la misma contraseña para confirmarla</string>
 
+    <string name="coming_soon">¡Próximamente! 👷</string>
     <string name="avatar_choose_title">Escoge tu avatar</string>
+
+    <string name="home_greeting">Hola %1$s</string>
 </resources>

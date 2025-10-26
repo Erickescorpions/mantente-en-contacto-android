@@ -45,6 +45,13 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation("com.tbuonomo:dotsindicator:5.1.0") {
+        exclude(group = "androidx.fragment", module = "fragment")
+        exclude(group = "androidx.lifecycle")
+        exclude(group = "androidx.viewpager2", module = "viewpager2")
+    }
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

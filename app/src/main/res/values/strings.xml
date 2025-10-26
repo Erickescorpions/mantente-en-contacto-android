@@ -39,4 +39,6 @@
     <string name="avatar_choose_title">Choose your avatar</string>
 
     <string name="home_greeting">Hi %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -4,13 +4,12 @@
     <string name="onboarding_welcome_title">¡Bienvenido!</string>
     <string name="onboarding_welcome_desc1">"Mantente en contacto" es una aplicación que te notifica automáticamente cuando llegas a tu destino.</string>
     <string name="onboarding_welcome_desc2">Olvídate de mandar mensajes uno por uno o de compartir tu ubicación en tiempo real.</string>
-    <string name="onboarding_welcome_start">Comenzar</string>
 
+    <string name="onboarding_pc_title">Mantente en contacto</string>
     <string name="onboarding_pc_desc1">Para mantenerte en contacto con quienes elijas, podrás registrar los lugares que visitas con frecuencia.</string>
     <string name="onboarding_pc_desc2">Tú decides quién recibe la notificación.</string>
-    <string name="onboarding_btn_next">Siguiente</string>
 
-    <string name="onboarding_privacy_desc1">Tu privacidad es lo más importante:</string>
+    <string name="onboarding_privacy_desc1">Tu privacidad es lo más importante</string>
     <string name="onboarding_privacy_desc2">La app no comparte tu ubicación todo el tiempo, solo notifica la primera vez que llegas a tu destino.</string>
 
     <string name="onboarding_get_started_desc1">¿Listo para empezar?</string>

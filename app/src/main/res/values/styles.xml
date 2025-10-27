@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="MainTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="Widget.MyApp.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/yellow</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="cornerRadius">16dp</item>
     </style>
 </resources>

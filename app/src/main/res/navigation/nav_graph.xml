@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/mainOnboardingFragment2">
+    <fragment
+        android:id="@+id/mainOnboardingFragment2"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.onboarding.MainOnboardingFragment"
+        android:label="fragment_main_onboarding"
+        tools:layout="@layout/fragment_main_onboarding" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.auth.RegisterFragment"
+        android:label="RegisterFragment" />
+</navigation>

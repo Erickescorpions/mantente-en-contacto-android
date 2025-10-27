@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.RegisterActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+
+                android:text="@string/auth_register_title"
+
+                style="@style/MainTitle" />
+
+
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/auth_register_desc_avatar"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_register_desc_avatar_help"
+                android:textSize="11sp"
+                android:layout_gravity="end"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="30dp"
+                />
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/auth_register_hint_username" />
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="@string/auth_register_hint_phone"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/etPassword"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:hint="@string/auth_register_hint_password"
+
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:hint="@string/auth_register_hint_confirm_password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btnCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/auth_register_btn_create" />
+
+            <Button
+                android:id="@+id/btnGoogle"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/auth_register_btn_google" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,6 +51,8 @@ dependencies {
         exclude(group = "androidx.viewpager2", module = "viewpager2")
     }
 
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.9.5")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.9.5")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

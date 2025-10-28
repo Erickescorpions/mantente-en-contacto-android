@@ -23,6 +23,7 @@
 
     <string name="auth_register_hint_username">Username</string>
     <string name="auth_register_hint_phone">Phone number</string>
+    <string name="auth_register_hint_email">Email</string>
     <string name="auth_register_hint_password">Password</string>
     <string name="auth_register_hint_confirm_password">Confirm password</string>
 
@@ -31,6 +32,7 @@
 
     <string name="error_username_required">Username is required</string>
     <string name="error_phone_required">Phone number is required</string>
+    <string name="error_email_required">Email is required</string>
     <string name="error_password_required">Password is required</string>
     <string name="error_password_mismatch">Passwords must match</string>
 
@@ -38,4 +40,6 @@
     <string name="avatar_choose_title">Choose your avatar</string>
 
     <string name="home_greeting">Hi %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

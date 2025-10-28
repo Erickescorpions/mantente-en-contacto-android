@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -53,6 +54,13 @@ dependencies {
 
     implementation ("androidx.navigation:navigation-fragment-ktx:2.9.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.9.5")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    // Analytics
+    implementation("com.google.firebase:firebase-analytics")
+    // Auth
+    implementation("com.google.firebase:firebase-auth")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

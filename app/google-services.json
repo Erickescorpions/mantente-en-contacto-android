@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2009061525",
+    "project_id": "mantente-en-contacto",
+    "storage_bucket": "mantente-en-contacto.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2009061525:android:2dad7897ea3259c434639c",
+        "android_client_info": {
+          "package_name": "com.erickvazquezs.mantenteencontacto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC8SoF_RynmDihx9cT37IZQe9QI78tRyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

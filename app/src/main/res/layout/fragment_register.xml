@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".auth.RegisterActivity">
+    tools:context=".ui.fragments.auth.RegisterFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -67,14 +67,14 @@
                 android:hint="@string/auth_register_hint_username" />
 
             <EditText
-                android:id="@+id/etPhoneNumber"
+                android:id="@+id/etEmail"
 
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
 
-                android:hint="@string/auth_register_hint_phone"
-                android:inputType="phone" />
+                android:hint="@string/auth_register_hint_email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/etPassword"

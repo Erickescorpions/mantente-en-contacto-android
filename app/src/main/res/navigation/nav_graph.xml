@@ -8,7 +8,11 @@
         android:id="@+id/mainOnboardingFragment2"
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.onboarding.MainOnboardingFragment"
         android:label="fragment_main_onboarding"
-        tools:layout="@layout/fragment_main_onboarding" />
+        tools:layout="@layout/fragment_main_onboarding" >
+        <action
+            android:id="@+id/action_mainOnboardingFragment2_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.erickvazquezs.mantenteencontacto.ui.auth.RegisterFragment"

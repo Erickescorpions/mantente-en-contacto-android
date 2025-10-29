@@ -13,6 +13,7 @@ import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentRegisterBinding
 import com.erickvazquezs.mantenteencontacto.models.AvatarEntity
 import com.erickvazquezs.mantenteencontacto.models.UserEntity
+import com.erickvazquezs.mantenteencontacto.utils.Constants
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -108,12 +109,12 @@ class RegisterFragment : Fragment() {
                             .document(uid)
                             .set(userMap)
                             .addOnSuccessListener {
-                                Log.d("APP", "Usuario guardado con id: $uid")
+                                Log.d(Constants.LOGTAG, "Usuario guardado con id: $uid")
                                 findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
                             }
                             .addOnFailureListener { e ->
                                 binding.btnCreate.isEnabled = true
-                                Log.w("APP", "Error guardando usuario", e)
+                                Log.w(Constants.LOGTAG, "Error guardando usuario", e)
                                 Toast.makeText(
                                     requireContext(),
                                     "Error guardando datos, intenta de nuevo",

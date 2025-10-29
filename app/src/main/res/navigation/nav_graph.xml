@@ -33,7 +33,11 @@
         android:id="@+id/userAccountFragment"
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.account.UserAccountFragment"
         android:label="fragment_user_account"
-        tools:layout="@layout/fragment_user_account" />
+        tools:layout="@layout/fragment_user_account" >
+        <action
+            android:id="@+id/action_userAccountFragment_to_mainOnboardingFragment2"
+            app:destination="@id/mainOnboardingFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/chooseAvatarFragment"
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.account.ChooseAvatarFragment"

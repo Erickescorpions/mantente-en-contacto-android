@@ -130,7 +130,11 @@ class RegisterFragment : Fragment() {
         binding.btnGoogle.setOnClickListener {
             Toast.makeText(activity, R.string.coming_soon, Toast.LENGTH_SHORT).show()
         }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     private fun validate(): Boolean {

@@ -34,6 +34,7 @@
     <string name="error_phone_required">Phone number is required</string>
     <string name="error_email_required">Email is required</string>
     <string name="error_password_required">Password is required</string>
+    <string name="error_email_invalid">Please enter a valid email address</string>
     <string name="error_password_mismatch">Passwords must match</string>
 
     <string name="coming_soon">Coming soon 👷🏻</string>

@@ -2,6 +2,7 @@ package com.erickvazquezs.mantenteencontacto.ui.fragments.auth
 
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -150,8 +151,12 @@ class RegisterFragment : Fragment() {
             errors.add(getString(R.string.error_username_required))
         }
 
-        if (binding.etEmail.text.isNullOrEmpty()) {
+        val email = binding.etEmail.text
+
+        if (email.isNullOrEmpty()) {
             errors.add(getString(R.string.error_email_required))
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            errors.add(getString(R.string.error_email_invalid))
         }
 
         if (binding.etPassword.text.isNullOrEmpty()) {

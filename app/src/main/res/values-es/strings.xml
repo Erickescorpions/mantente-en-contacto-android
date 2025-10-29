@@ -33,6 +33,7 @@
     <string name="error_username_required">El campo nombre de usuario es requerido</string>
     <string name="error_phone_required">El campo numero de telefono es requerido</string>
     <string name="error_email_required">El correo electronico es requerido</string>
+    <string name="error_email_invalid">Ingresa un correo electronico valido, por favor</string>
     <string name="error_password_required">El campo contraseña es requerido</string>
     <string name="error_password_mismatch">Ingresa la misma contraseña para confirmarla</string>
 

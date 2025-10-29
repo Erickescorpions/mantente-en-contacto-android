@@ -66,6 +66,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     // Firestore
     implementation("com.google.firebase:firebase-firestore")
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.1.7")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

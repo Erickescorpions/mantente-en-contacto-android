@@ -7,6 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
+import com.erickvazquezs.mantenteencontacto.Extensions.dataStore
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.erickvazquezs.mantenteencontacto.R
@@ -18,6 +22,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
 
@@ -109,7 +114,7 @@ class RegisterFragment : Fragment() {
                             .document(uid)
                             .set(userMap)
                             .addOnSuccessListener {
-                                Log.d(Constants.LOGTAG, "Usuario guardado con id: $uid")
+                                setOnboardingCompletedDS()
                                 findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
                             }
                             .addOnFailureListener { e ->
@@ -133,8 +138,8 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 
@@ -159,4 +164,13 @@ class RegisterFragment : Fragment() {
 
         return errors.isEmpty()
     }
+
+    private fun setOnboardingCompletedDS() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            requireContext().dataStore.edit { prefs ->
+                prefs[booleanPreferencesKey(Constants.ONBOARDING)] = true
+            }
+        }
+    }
+
 }

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_mainOnboardingFragment2_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_mainOnboardingFragment2_to_userAccountFragment"
+            app:destination="@id/userAccountFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

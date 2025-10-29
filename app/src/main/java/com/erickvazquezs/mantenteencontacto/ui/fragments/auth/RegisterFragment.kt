@@ -1,6 +1,7 @@
 package com.erickvazquezs.mantenteencontacto.ui.fragments.auth
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.erickvazquezs.mantenteencontacto.models.UserEntity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 class RegisterFragment : Fragment() {
 
@@ -53,7 +55,8 @@ class RegisterFragment : Fragment() {
         binding.imgAvatar.setImageResource(R.drawable.img1)
         binding.btnCreate.setOnClickListener {
             if (!validate()) {
-                Toast.makeText(requireContext(), errors.joinToString("\n"), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), errors.joinToString("\n"), Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -70,8 +73,40 @@ class RegisterFragment : Fragment() {
             auth.createUserWithEmailAndPassword(user.email, user.password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
-                        val currentUser = auth.currentUser
-                        findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
+                        val uid = task.result?.user?.uid
+                        if (uid == null) {
+                            binding.btnCreate.isEnabled = true
+                            Toast.makeText(
+                                requireContext(),
+                                "No se pudo obtener el UID",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@addOnCompleteListener
+                        }
+
+                        val db = Firebase.firestore
+                        val userMap = hashMapOf(
+                            "username" to user.username,
+                            "email" to user.email,
+                            "avatar" to user.avatar.avatarId // se guarda como número
+                        )
+
+                        db.collection("users")
+                            .document(uid)
+                            .set(userMap)
+                            .addOnSuccessListener {
+                                Log.d("APP", "Usuario guardado con id: $uid")
+                                findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
+                            }
+                            .addOnFailureListener { e ->
+                                binding.btnCreate.isEnabled = true
+                                Log.w("APP", "Error guardando usuario", e)
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Error guardando datos, intenta de nuevo",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                     } else {
                         binding.btnCreate.isEnabled = true
                         Toast.makeText(requireContext(), "Try again!", Toast.LENGTH_SHORT).show()

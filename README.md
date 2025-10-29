@@ -1,4 +1,3 @@
-```
 # Mantente en Contacto
 
 ## Features
@@ -15,5 +14,3 @@
 
 4. **DataStore**
    - Se usa **Preferences DataStore** para mostrar el onboarding solo la primera vez que se abre la app.
-
-```

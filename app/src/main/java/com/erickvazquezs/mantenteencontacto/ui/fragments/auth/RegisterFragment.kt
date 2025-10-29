@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentRegisterBinding
 import com.erickvazquezs.mantenteencontacto.models.AvatarEntity
@@ -52,7 +53,19 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.imgAvatar.setImageResource(R.drawable.img1)
+        val args: RegisterFragmentArgs by navArgs()
+        avatar = args.avatar
+
+        if (avatar == null) {
+            avatar = AvatarEntity(R.drawable.img1)
+        }
+
+        binding.imgAvatar.setImageResource(avatar!!.avatarId)
+
+        binding.imgAvatar.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_chooseAvatarFragment)
+        }
+
         binding.btnCreate.setOnClickListener {
             if (!validate()) {
                 Toast.makeText(requireContext(), errors.joinToString("\n"), Toast.LENGTH_SHORT)

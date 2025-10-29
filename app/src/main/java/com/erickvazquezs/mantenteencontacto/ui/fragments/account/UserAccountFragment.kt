@@ -1,4 +1,4 @@
-package com.erickvazquezs.mantenteencontacto.ui.account
+package com.erickvazquezs.mantenteencontacto.ui.fragments.account
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

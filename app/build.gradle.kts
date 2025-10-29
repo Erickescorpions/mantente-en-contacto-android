@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
+
+    alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -52,8 +55,8 @@ dependencies {
         exclude(group = "androidx.viewpager2", module = "viewpager2")
     }
 
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.9.5")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.9.5")
+    implementation (libs.androidx.navigation.fragment.ktx)
+    implementation (libs.androidx.navigation.ui.ktx)
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.4.0"))

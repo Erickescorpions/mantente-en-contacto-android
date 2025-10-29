@@ -1,14 +1,12 @@
-package com.erickvazquezs.mantenteencontacto.avatar
+package com.erickvazquezs.mantenteencontacto.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.erickvazquezs.mantenteencontacto.models.AvatarEntity
 import com.erickvazquezs.mantenteencontacto.R
+import com.erickvazquezs.mantenteencontacto.models.AvatarEntity
 
 class AvatarListAdapter(val list: List<AvatarEntity>) : RecyclerView.Adapter<AvatarListAdapter.AvatarListViewHolder>() {
 

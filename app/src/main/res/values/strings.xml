@@ -13,7 +13,7 @@
     <string name="onboarding_privacy_desc2">The app does not share your location all the time, it only notifies the first time you arrive at your destination.</string>
 
     <string name="onboarding_get_started_desc1">Ready to get started?</string>
-    <string name="onboarding_get_started_desc2">Create an account and stay in touch with the people who matter most.</string>
+    <string name="onboarding_get_started_desc2">Start your experience by staying in touch with those who matter most to you.</string>
     <string name="onboarding_get_started_btn_login">Log in</string>
     <string name="onboarding_get_started_btn_sign_up">Sign up</string>
 
@@ -42,10 +42,15 @@
 
     <string name="home_greeting">Hi %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="login_btn">Sign in</string>
     <string name="tv_new_user">New user? Create your account.</string>
     <string name="password_hint">Password</string>
     <string name="email_hint">Email</string>
     <string name="login_title">Sign in</string>
+    <string name="error_password_weak">The password must be at least 6 characters long.</string>
+    <string name="error_email_not_in_db">The email address provided is not registered.</string>
+    <string name="error_invalid_credentials">The credentials entered are incorrect</string>
+    <string name="error_global">An error occurred, please try again later.</string>
+    <string name="onboarding_get_started_btn_start">Start</string>
 </resources>

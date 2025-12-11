@@ -13,7 +13,7 @@
     <string name="onboarding_privacy_desc2">La app no comparte tu ubicación todo el tiempo, solo notifica la primera vez que llegas a tu destino.</string>
 
     <string name="onboarding_get_started_desc1">¿Listo para empezar?</string>
-    <string name="onboarding_get_started_desc2">Crea una cuenta y mantente en contacto con quienes más quieres.</string>
+    <string name="onboarding_get_started_desc2">Empieza tu experiencia manteniendote en contacto con quienes mas te importan.</string>
     <string name="onboarding_get_started_btn_login">Inicia sesion</string>
     <string name="onboarding_get_started_btn_sign_up">Crear una cuenta</string>
 
@@ -41,4 +41,15 @@
     <string name="avatar_choose_title">Escoge tu avatar</string>
 
     <string name="home_greeting">Hola %1$s</string>
+
+    <string name="login_btn">Iniciar sesion</string>
+    <string name="tv_new_user">¿Nuevo usuario? Crea una nueva cuenta.</string>
+    <string name="password_hint">Password</string>
+    <string name="email_hint">Email</string>
+    <string name="login_title">Inicia sesion</string>
+    <string name="error_password_weak">La contraseña debe tener por lo menos 6 caracteres.</string>
+    <string name="error_email_not_in_db">El email ingresado no esta registrado.</string>
+    <string name="error_invalid_credentials">Las credenciales ingresadas no son validas.</string>
+    <string name="error_global">Un error ha ocurrido, por favor intentalo de nuevo después.</string>
+    <string name="onboarding_get_started_btn_start">Comenzar</string>
 </resources>

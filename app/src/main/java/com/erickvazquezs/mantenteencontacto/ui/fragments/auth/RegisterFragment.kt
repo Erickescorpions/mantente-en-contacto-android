@@ -8,134 +8,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.lifecycleScope
-import com.erickvazquezs.mantenteencontacto.Extensions.dataStore
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentRegisterBinding
-import com.erickvazquezs.mantenteencontacto.models.AvatarEntity
-import com.erickvazquezs.mantenteencontacto.models.UserEntity
-import com.erickvazquezs.mantenteencontacto.utils.Constants
-import com.google.firebase.Firebase
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 class RegisterFragment : Fragment() {
-
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
-
-    private val errors = mutableListOf<String>()
-    private var avatar: AvatarEntity? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        auth = Firebase.auth
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        val currentUser = auth.currentUser
-        if (currentUser != null && findNavController().currentDestination?.id == R.id.registerFragment) {
-//            findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val args: RegisterFragmentArgs by navArgs()
-//        avatar = args.avatar
+        auth = FirebaseAuth.getInstance()
 
-        if (avatar == null) {
-            avatar = AvatarEntity(R.drawable.img1)
-        }
+        binding.btnRegister.setOnClickListener {
+            val email = binding.etEmail.text.toString()
+            val name = binding.etUsername.text.toString()
+            val password = binding.etPassword.text.toString()
+            val passwordConfirmation = binding.etPasswordConfirmation.text.toString()
 
-        binding.imgAvatar.setImageResource(avatar!!.avatarId)
-
-        binding.imgAvatar.setOnClickListener {
-//            findNavController().navigate(R.id.action_registerFragment_to_chooseAvatarFragment)
-        }
-
-        binding.btnCreate.setOnClickListener {
-            if (!validate()) {
-                Toast.makeText(requireContext(), errors.joinToString("\n"), Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            }
-
-            binding.btnCreate.isEnabled = false
-
-            val user = UserEntity(
-                binding.etUsername.text.toString().trim(),
-                null,
-                binding.etEmail.text.toString().trim(),
-                avatar ?: AvatarEntity(R.drawable.img1),
-                binding.etPassword.text.toString()
+            val data = mapOf(
+                "email" to email,
+                "name" to name,
+                "password" to password,
+                "passwordConfirmation" to passwordConfirmation
             )
 
-            auth.createUserWithEmailAndPassword(user.email, user.password)
-                .addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        val uid = task.result?.user?.uid
-                        if (uid == null) {
-                            binding.btnCreate.isEnabled = true
-                            Toast.makeText(
-                                requireContext(),
-                                "No se pudo obtener el UID",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return@addOnCompleteListener
-                        }
+            if (validate(data)) return@setOnClickListener
 
-                        val db = Firebase.firestore
-                        val userMap = hashMapOf(
-                            "username" to user.username,
-                            "email" to user.email,
-                            "avatar" to user.avatar.avatarId // se guarda como número
-                        )
-
-                        db.collection("users")
-                            .document(uid)
-                            .set(userMap)
-                            .addOnSuccessListener {
-                                setOnboardingCompletedDS()
-//                                findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
-                            }
-                            .addOnFailureListener { e ->
-                                binding.btnCreate.isEnabled = true
-                                Log.w(Constants.LOGTAG, "Error guardando usuario", e)
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Error guardando datos, intenta de nuevo",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                    } else {
-                        binding.btnCreate.isEnabled = true
-                        Toast.makeText(requireContext(), "Try again!", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            createUser(email, password, name)
         }
 
-        binding.btnGoogle.setOnClickListener {
-            Toast.makeText(activity, R.string.coming_soon, Toast.LENGTH_SHORT).show()
+        binding.tvLogin.setOnClickListener {
+            findNavController().navigate(
+                RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+            )
         }
     }
 
@@ -144,36 +66,93 @@ class RegisterFragment : Fragment() {
         _binding = null
     }
 
-    private fun validate(): Boolean {
-        errors.clear()
+    private fun validate(data: Map<String, String>): Boolean {
+        var errors = false
 
-        if (binding.etUsername.text.isNullOrEmpty()) {
-            errors.add(getString(R.string.error_username_required))
+        val name = data["name"].orEmpty()
+        val email = data["email"].orEmpty()
+        val password = data["password"].orEmpty()
+        val passwordConfirmation = data["passwordConfirmation"].orEmpty()
+
+        if (name.isEmpty()) {
+            binding.etUsername.error = getString(R.string.error_username_required)
+            errors = true
         }
 
-        val email = binding.etEmail.text
-
-        if (email.isNullOrEmpty()) {
-            errors.add(getString(R.string.error_email_required))
+        // Validación del correo electrónico
+        if (email.isEmpty()) {
+            binding.etEmail.error = getString(R.string.error_email_required)
+            errors = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            errors.add(getString(R.string.error_email_invalid))
+            binding.etEmail.error = getString(R.string.error_email_invalid)
+            errors = true
         }
 
-        if (binding.etPassword.text.isNullOrEmpty()) {
-            errors.add(getString(R.string.error_password_required))
+        // Validación de la contraseña
+        if (password.isEmpty()) {
+            binding.etPassword.error = getString(R.string.error_password_required)
+            errors = true
+        } else if (password.length < 6) {
+            binding.etPassword.error = getString(R.string.error_password_weak)
+            errors = true
+        } else if(passwordConfirmation.isEmpty()) {
+            binding.etPasswordConfirmation.error = getString(R.string.error_password_confirmation_required)
+            errors = true
+        } else if (password != passwordConfirmation) {
+            binding.etPassword.error = getString(R.string.error_password_mismatch)
+            errors = true
         }
 
-        if (binding.etPassword.text.toString() != binding.etConfirmPassword.text.toString()) {
-            errors.add(getString(R.string.error_password_mismatch))
-        }
-
-        return errors.isEmpty()
+        return errors
     }
 
-    private fun setOnboardingCompletedDS() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            requireContext().dataStore.edit { prefs ->
-                prefs[booleanPreferencesKey(Constants.ONBOARDING)] = true
+    private fun actionRegisterSuccessful() {
+//        findNavController().navigate(
+//            RegisterFragmentDirections.actionRegisterFragmentToMoviesListFragment()
+//        )
+    }
+
+    private fun createUser(usr: String, psw: String, name: String) {
+        auth.createUserWithEmailAndPassword(usr, psw)
+            .addOnCompleteListener { authResult ->
+                if (authResult.isSuccessful) {
+                    // crear registro en firestore del usuario
+
+                    actionRegisterSuccessful()
+                } else {
+                    handleErrors(authResult)
+                }
+            }
+    }
+
+    private fun handleErrors(task: Task<AuthResult>) {
+        val exception = task.exception
+
+        when (exception) {
+            is FirebaseAuthWeakPasswordException -> {
+                binding.etPassword.error =
+                    getString(R.string.error_password_weak)
+                binding.etPassword.requestFocus()
+                binding.etPassword.setText("")
+            }
+
+            is FirebaseAuthInvalidCredentialsException -> {
+                binding.etEmail.error = getString(R.string.error_email_invalid)
+                binding.etEmail.requestFocus()
+            }
+
+            is FirebaseAuthUserCollisionException -> {
+                binding.etEmail.error = getString(R.string.error_email_already_in_use)
+                binding.etEmail.requestFocus()
+            }
+
+            else -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.error_global),
+                    Toast.LENGTH_SHORT
+                ).show()
+                exception?.printStackTrace()
             }
         }
     }

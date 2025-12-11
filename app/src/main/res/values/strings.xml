@@ -53,4 +53,12 @@
     <string name="error_invalid_credentials">The credentials entered are incorrect</string>
     <string name="error_global">An error occurred, please try again later.</string>
     <string name="onboarding_get_started_btn_start">Start</string>
+    <string name="create_account_title">Create your account</string>
+    <string name="username">Username</string>
+    <string name="username_hint">Username</string>
+    <string name="confirm_password_hint">Confirm password</string>
+    <string name="register_btn">Register</string>
+    <string name="tv_login">Do you already have an account? Sign in.</string>
+    <string name="error_email_already_in_use">The email is already linked to an account.</string>
+    <string name="error_password_confirmation_required">Password confirmation is required</string>
 </resources>

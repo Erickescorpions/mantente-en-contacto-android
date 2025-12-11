@@ -10,44 +10,21 @@
         android:label="fragment_main_onboarding"
         tools:layout="@layout/fragment_main_onboarding" >
         <action
-            android:id="@+id/action_mainOnboardingFragment2_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            android:id="@+id/action_mainOnboardingFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_mainOnboardingFragment2_to_userAccountFragment"
-            app:destination="@id/userAccountFragment" />
+            android:id="@+id/action_loginFragment_to_registerFragment2"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.auth.RegisterFragment"
-        android:label="RegisterFragment" >
-        <action
-            android:id="@+id/action_registerFragment_to_userAccountFragment"
-            app:destination="@id/userAccountFragment" />
-        <action
-            android:id="@+id/action_registerFragment_to_chooseAvatarFragment"
-            app:destination="@id/chooseAvatarFragment" />
-        <argument
-            android:name="avatar"
-            app:argType="com.erickvazquezs.mantenteencontacto.models.AvatarEntity"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </fragment>
-    <fragment
-        android:id="@+id/userAccountFragment"
-        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.account.UserAccountFragment"
-        android:label="fragment_user_account"
-        tools:layout="@layout/fragment_user_account" >
-        <action
-            android:id="@+id/action_userAccountFragment_to_mainOnboardingFragment2"
-            app:destination="@id/mainOnboardingFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/chooseAvatarFragment"
-        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.account.ChooseAvatarFragment"
-        android:label="fragment_choose_avatar"
-        tools:layout="@layout/fragment_choose_avatar" >
-        <action
-            android:id="@+id/action_chooseAvatarFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-    </fragment>
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

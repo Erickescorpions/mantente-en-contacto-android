@@ -36,11 +36,11 @@ class ChooseAvatarFragment : Fragment() {
         val adapter = AvatarListAdapter(data)
 
         adapter.onItemSelected = { avatar ->
-            findNavController().navigate(
-                ChooseAvatarFragmentDirections.actionChooseAvatarFragmentToRegisterFragment(
-                    avatar
-                )
-            )
+//            findNavController().navigate(
+//                ChooseAvatarFragmentDirections.actionChooseAvatarFragmentToRegisterFragment(
+//                    avatar
+//                )
+//            )
         }
         binding.rvAvatarList.adapter = adapter
         binding.rvAvatarList.layoutManager = GridLayoutManager(requireContext(), 3)

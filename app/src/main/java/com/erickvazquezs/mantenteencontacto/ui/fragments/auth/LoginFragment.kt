@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
         // para navegar a la vista del register
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(
-                LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+                LoginFragmentDirections.actionLoginFragmentToRegisterFragment2()
             )
         }
     }
@@ -61,19 +61,19 @@ class LoginFragment : Fragment() {
 
         // Validación del correo electrónico
         if (email.isEmpty()) {
-            binding.etEmail.error = getString(R.string.error_empty_email)
+            binding.etEmail.error = getString(R.string.error_email_required)
             errors = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmail.error = getString(R.string.error_invalid_email)
+            binding.etEmail.error = getString(R.string.error_email_invalid)
             errors = true
         }
 
         // Validación de la contraseña
         if (password.isEmpty()) {
-            binding.etPassword.error = getString(R.string.error_empty_password)
+            binding.etPassword.error = getString(R.string.error_password_required)
             errors = true
         } else if (password.length < 6) {
-            binding.etPassword.error = getString(R.string.error_weak_password)
+            binding.etPassword.error = getString(R.string.error_password_weak)
             errors = true
         }
 
@@ -92,9 +92,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun actionLoginSuccessful() {
-        findNavController().navigate(
-            LoginFragmentDirections.actionLoginFragmentToMoviesListFragment()
-        )
+//        findNavController().navigate(
+//            LoginFragmentDirections.actionLoginFragmentToMoviesListFragment()
+//        )
     }
 
     private fun handleErrors(task: Task<AuthResult>) {

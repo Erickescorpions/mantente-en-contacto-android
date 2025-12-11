@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
             viewLifecycleOwner.lifecycleScope.launch {
                 readOnboardingComplete().collect { completed ->
                     if (completed) {
-                        findNavController().navigate(R.id.action_mainOnboardingFragment2_to_registerFragment)
+//                        findNavController().navigate(R.id.action_mainOnboardingFragment2_to_registerFragment)
                     }
                 }
             }

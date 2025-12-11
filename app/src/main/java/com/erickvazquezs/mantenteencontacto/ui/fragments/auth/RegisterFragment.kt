@@ -53,15 +53,15 @@ class RegisterFragment : Fragment() {
 
         val currentUser = auth.currentUser
         if (currentUser != null && findNavController().currentDestination?.id == R.id.registerFragment) {
-            findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
+//            findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args: RegisterFragmentArgs by navArgs()
-        avatar = args.avatar
+//        val args: RegisterFragmentArgs by navArgs()
+//        avatar = args.avatar
 
         if (avatar == null) {
             avatar = AvatarEntity(R.drawable.img1)
@@ -70,7 +70,7 @@ class RegisterFragment : Fragment() {
         binding.imgAvatar.setImageResource(avatar!!.avatarId)
 
         binding.imgAvatar.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFragment_to_chooseAvatarFragment)
+//            findNavController().navigate(R.id.action_registerFragment_to_chooseAvatarFragment)
         }
 
         binding.btnCreate.setOnClickListener {
@@ -116,7 +116,7 @@ class RegisterFragment : Fragment() {
                             .set(userMap)
                             .addOnSuccessListener {
                                 setOnboardingCompletedDS()
-                                findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
+//                                findNavController().navigate(R.id.action_registerFragment_to_userAccountFragment)
                             }
                             .addOnFailureListener { e ->
                                 binding.btnCreate.isEnabled = true

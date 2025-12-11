@@ -18,12 +18,9 @@ class GetStartedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnCreateAccount.setOnClickListener {
-            findNavController().navigate(R.id.action_mainOnboardingFragment2_to_registerFragment)
-        }
-
-        binding.btnLogin.setOnClickListener {
-            Toast.makeText(activity, R.string.coming_soon, Toast.LENGTH_SHORT).show()
+        binding.btnStart.setOnClickListener {
+//            findNavController().navigate(R.id.action_mainOnboardingFragment2_to_registerFragment)
+            findNavController().navigate(R.id.action_mainOnboardingFragment2_to_loginFragment)
         }
     }
 

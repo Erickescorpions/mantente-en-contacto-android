@@ -53,7 +53,7 @@ class UserAccountFragment : Fragment() {
             }
         } else {
             // no esta autenticado, lo mandamos al onboarding
-            findNavController().navigate(R.id.action_userAccountFragment_to_mainOnboardingFragment2)
+//            findNavController().navigate(R.id.action_userAccountFragment_to_mainOnboardingFragment2)
         }
     }
 

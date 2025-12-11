@@ -51,18 +51,11 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btnCreateAccount"
-            android:text="@string/onboarding_get_started_btn_sign_up"
+            android:id="@+id/btnStart"
+            android:text="@string/onboarding_get_started_btn_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:text="@string/onboarding_get_started_btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

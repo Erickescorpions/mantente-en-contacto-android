@@ -1,14 +1,27 @@
 package com.erickvazquezs.mantenteencontacto
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.erickvazquezs.mantenteencontacto.Extensions.dataStore
 import com.erickvazquezs.mantenteencontacto.databinding.ActivityMainBinding
+import com.erickvazquezs.mantenteencontacto.ui.fragments.auth.LoginFragmentDirections
 import com.erickvazquezs.mantenteencontacto.ui.fragments.onboarding.MainOnboardingFragment
+import com.erickvazquezs.mantenteencontacto.utils.Constants
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,5 +44,24 @@ class MainActivity : AppCompatActivity() {
         ) as NavHostFragment
 
         navController = navHostFragment.navController
+
+        lifecycleScope.launch {
+
+            val done = dataStore.data.map { prefs -> prefs[booleanPreferencesKey(Constants.ONBOARDING)] ?: false }.first()
+            if (done) {
+                val user = FirebaseAuth.getInstance().currentUser
+
+                if (user == null) {
+                    // redirigimos al login
+                    navController.navigate(
+                        R.id.action_mainOnboardingFragment2_to_loginFragment
+                    )
+                } else {
+                    // redirigimos al home
+
+                }
+            }
+
+        }
     }
 }

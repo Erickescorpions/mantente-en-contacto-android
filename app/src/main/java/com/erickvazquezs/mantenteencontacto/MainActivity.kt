@@ -2,6 +2,7 @@ package com.erickvazquezs.mantenteencontacto
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.erickvazquezs.mantenteencontacto.Extensions.dataStore
 import com.erickvazquezs.mantenteencontacto.databinding.ActivityMainBinding
 import com.erickvazquezs.mantenteencontacto.ui.fragments.auth.LoginFragmentDirections
@@ -27,6 +29,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+
+    private val fullScreenDestinations = setOf(
+        R.id.mainOnboardingFragment2,
+        R.id.loginFragment,
+        R.id.registerFragment
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,17 @@ class MainActivity : AppCompatActivity() {
         ) as NavHostFragment
 
         navController = navHostFragment.navController
+
+        val bottomNav = binding.bottomNavigation
+        bottomNav.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id in fullScreenDestinations) {
+                bottomNav.visibility = View.GONE
+            } else {
+                bottomNav.visibility = View.VISIBLE
+            }
+        }
 
         lifecycleScope.launch {
 

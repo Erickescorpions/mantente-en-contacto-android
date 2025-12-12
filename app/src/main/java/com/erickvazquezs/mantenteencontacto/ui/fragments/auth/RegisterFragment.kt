@@ -11,12 +11,16 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentRegisterBinding
+import com.erickvazquezs.mantenteencontacto.models.UserDto
+import com.erickvazquezs.mantenteencontacto.utils.Constants
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Firebase
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.firestore.firestore
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
@@ -95,8 +99,9 @@ class RegisterFragment : Fragment() {
         } else if (password.length < 6) {
             binding.etPassword.error = getString(R.string.error_password_weak)
             errors = true
-        } else if(passwordConfirmation.isEmpty()) {
-            binding.etPasswordConfirmation.error = getString(R.string.error_password_confirmation_required)
+        } else if (passwordConfirmation.isEmpty()) {
+            binding.etPasswordConfirmation.error =
+                getString(R.string.error_password_confirmation_required)
             errors = true
         } else if (password != passwordConfirmation) {
             binding.etPassword.error = getString(R.string.error_password_mismatch)
@@ -106,19 +111,42 @@ class RegisterFragment : Fragment() {
         return errors
     }
 
-    private fun actionRegisterSuccessful() {
-//        findNavController().navigate(
-//            RegisterFragmentDirections.actionRegisterFragmentToMoviesListFragment()
-//        )
+
+    private fun actionRegisterSuccessful(user: UserDto) {
+        val db = Firebase.firestore
+        db.collection("users")
+            .document(user.id!!)
+            .set(user)
+            .addOnSuccessListener { e ->
+                // navegamos al home
+                Log.d(Constants.LOGTAG, "Usuario ${user.email} guardado exitosamente en Firestore.")
+
+                //        findNavController().navigate(
+                //            RegisterFragmentDirections.actionRegisterFragmentToMoviesListFragment()
+                //        )
+            }.addOnFailureListener {exception ->
+                // manejamos el error aqui
+                Log.e(Constants.LOGTAG, "Error al guardar el documento del usuario: ${exception.message}")
+            }
     }
 
-    private fun createUser(usr: String, psw: String, name: String) {
-        auth.createUserWithEmailAndPassword(usr, psw)
+    private fun createUser(email: String, psw: String, name: String) {
+        auth.createUserWithEmailAndPassword(email, psw)
             .addOnCompleteListener { authResult ->
                 if (authResult.isSuccessful) {
-                    // crear registro en firestore del usuario
+                    // creamos al usuario
+                    val firebaseUser = authResult.result?.user
+                    if (firebaseUser != null) {
+                        val user = UserDto(
+                            username = name,
+                            email = email,
+                            id = firebaseUser.uid
+                        )
 
-                    actionRegisterSuccessful()
+                        actionRegisterSuccessful(user)
+                    } else {
+                        // manejar el caso donde firebaseUser es nulo
+                    }
                 } else {
                     handleErrors(authResult)
                 }

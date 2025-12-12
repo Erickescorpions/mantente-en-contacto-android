@@ -44,7 +44,7 @@ class UserAccountFragment : Fragment() {
                     val user = document.toObject(UserDto::class.java)
 
                     if (user != null) {
-                        binding.ivAvatar.setImageResource(user.avatar)
+//                        binding.ivAvatar.setImageResource(user.avatarUrl)
                         binding.tvUsername.text = user.username
                     }
                 } else {

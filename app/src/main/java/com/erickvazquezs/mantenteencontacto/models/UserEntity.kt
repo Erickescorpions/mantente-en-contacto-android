@@ -4,8 +4,6 @@ import java.io.Serializable
 
 data class UserEntity(
     val username: String,
-    val phoneNumber: String? = null,
     val email: String,
-    val avatar: AvatarEntity,
-    val password: String
+    val avatarUrl: String,
 ): Serializable

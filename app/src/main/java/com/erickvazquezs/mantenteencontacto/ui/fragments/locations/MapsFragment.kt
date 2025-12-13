@@ -2,12 +2,10 @@ package com.erickvazquezs.mantenteencontacto.ui.fragments.locations
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
-import android.os.Build
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.provider.Settings
@@ -28,10 +26,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MapsFragment : Fragment() {
+
+    private val location_permissions = listOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
@@ -42,17 +44,26 @@ class MapsFragment : Fragment() {
     private val DEFAULT_ZOOM = 15f
 
     private val permissionsLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsResult ->
+            val fineGranted = permissionsResult[Manifest.permission.ACCESS_FINE_LOCATION] == true
+            val coarseGranted =
+                permissionsResult[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+
+            val locationAccessGranted = fineGranted || coarseGranted
+
+            if (locationAccessGranted) {
                 startGoogleMap()
             } else {
                 val permanentlyDenied = !shouldShowRequestPermissionRationale(
                     Manifest.permission.ACCESS_FINE_LOCATION
+                ) || !shouldShowRequestPermissionRationale(
+                    Manifest.permission.ACCESS_COARSE_LOCATION
                 )
+
                 if (permanentlyDenied) {
                     openAppSettings()
                 } else {
-                    showPermissionExplanationDialog()
+                    showPermissionDeniedUI()
                 }
             }
         }
@@ -87,8 +98,14 @@ class MapsFragment : Fragment() {
             requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        if (fineGranted) {
+        val locationAccessGranted = fineGranted || coarseGranted
+
+        if (locationAccessGranted) {
             startGoogleMap()
         } else {
             showPermissionExplanationDialog()
@@ -102,7 +119,7 @@ class MapsFragment : Fragment() {
             .setMessage(provider.getExplanation(true))
             .setPositiveButton("Entendido") { dialog, _ ->
                 dialog.dismiss()
-                permissionsLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                permissionsLauncher.launch(location_permissions.toTypedArray())
             }
             .setNegativeButton("Cancelar") { dialog, _ ->
                 dialog.dismiss()
@@ -136,7 +153,10 @@ class MapsFragment : Fragment() {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM))
         googleMap.isMyLocationEnabled = true
 
-        Log.d(Constants.LOGTAG, "Ubicación obtenida: ${currentLatLng.latitude}, ${currentLatLng.longitude}")
+        Log.d(
+            Constants.LOGTAG,
+            "Ubicación obtenida: ${currentLatLng.latitude}, ${currentLatLng.longitude}"
+        )
     }
 
     private fun showPermissionDeniedUI() {

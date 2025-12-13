@@ -28,6 +28,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -41,6 +42,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         googleMap.setOnMapClickListener(this)
     }
     var selectedLocation: LatLng? = null
+    private var selectedPlaceMarker: Marker? = null
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val DEFAULT_ZOOM = 15f
@@ -209,13 +211,15 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
     }
 
     private fun handleMapTap(latLng: LatLng) {
-        googleMap.clear()
+        selectedPlaceMarker?.remove()
 
-        googleMap.addMarker(
+        val newMarker = googleMap.addMarker(
             MarkerOptions()
                 .position(latLng)
                 .title("Lugar Seleccionado")
         )
+
+        selectedPlaceMarker = newMarker
 
         selectedLocation = latLng
         // mostramos el boton

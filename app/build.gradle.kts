@@ -76,6 +76,7 @@ dependencies {
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.1.7")
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

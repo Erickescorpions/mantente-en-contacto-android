@@ -1,29 +1,34 @@
 package com.erickvazquezs.mantenteencontacto.ui.fragments.locations
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-
-import androidx.fragment.app.viewModels
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentMapsBinding
-import com.erickvazquezs.mantenteencontacto.utils.permissions.BackgroundLocationPermissionExplanationProvider
+import com.erickvazquezs.mantenteencontacto.utils.Constants
 import com.erickvazquezs.mantenteencontacto.utils.permissions.FineLocationPermissionExplanationProvider
-import com.erickvazquezs.mantenteencontacto.utils.permissions.PermissionExplanationProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MapsFragment : Fragment() {
@@ -32,6 +37,9 @@ class MapsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var googleMap: GoogleMap
     private val callback = OnMapReadyCallback { map -> googleMap = map }
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val DEFAULT_ZOOM = 15f
 
     private val permissionsLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -61,6 +69,12 @@ class MapsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         checkAndRequestPermission()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     }
 
     override fun onDestroyView() {
@@ -101,6 +115,28 @@ class MapsFragment : Fragment() {
         val mapFragment =
             childFragmentManager.findFragmentById(binding.mapContainer.id) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        getDeviceLocation()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getDeviceLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                handleNewLocation(location)
+            }
+        }.addOnFailureListener { e ->
+            // Error al obtener la ubicación
+            Log.e(Constants.LOGTAG, "Error al obtener la última ubicación", e)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun handleNewLocation(location: Location) {
+        val currentLatLng = LatLng(location.latitude, location.longitude)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM))
+        googleMap.isMyLocationEnabled = true
+
+        Log.d(Constants.LOGTAG, "Ubicación obtenida: ${currentLatLng.latitude}, ${currentLatLng.longitude}")
     }
 
     private fun showPermissionDeniedUI() {

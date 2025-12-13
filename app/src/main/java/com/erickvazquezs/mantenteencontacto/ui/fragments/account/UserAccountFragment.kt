@@ -45,7 +45,8 @@ class UserAccountFragment : Fragment() {
 
                     if (user != null) {
 //                        binding.ivAvatar.setImageResource(user.avatarUrl)
-                        binding.tvUsername.text = user.username
+                        binding.tvEmail.text = user.email
+                        binding.tvGreeting.text = "Hola ${user.username}!"
                     }
                 } else {
                     Log.d(Constants.LOGTAG, "Error al traer informacion del usuario: ", task.exception)
@@ -54,6 +55,13 @@ class UserAccountFragment : Fragment() {
         } else {
             // no esta autenticado, lo mandamos al onboarding
 //            findNavController().navigate(R.id.action_userAccountFragment_to_mainOnboardingFragment2)
+        }
+
+        binding.btnLogout.setOnClickListener {
+            Firebase.auth.signOut()
+            findNavController().navigate(
+                UserAccountFragmentDirections.actionUserAccountFragmentToLoginFragment()
+            )
         }
     }
 

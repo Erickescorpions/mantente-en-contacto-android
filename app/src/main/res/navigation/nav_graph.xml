@@ -73,4 +73,16 @@
             app:argType="string"
             android:defaultValue="Dirección no especificada" />
     </fragment>
+    <fragment
+        android:id="@+id/userAccountFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.account.UserAccountFragment"
+        android:label="fragment_user_account"
+        tools:layout="@layout/fragment_user_account" >
+        <action
+            android:id="@+id/action_userAccountFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph.xml"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 </navigation>

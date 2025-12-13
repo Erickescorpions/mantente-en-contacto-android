@@ -2,13 +2,10 @@ package com.erickvazquezs.mantenteencontacto.ui.fragments.locations
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -22,13 +19,9 @@ import com.erickvazquezs.mantenteencontacto.databinding.FragmentMapsBinding
 import com.erickvazquezs.mantenteencontacto.utils.permissions.BackgroundLocationPermissionExplanationProvider
 import com.erickvazquezs.mantenteencontacto.utils.permissions.FineLocationPermissionExplanationProvider
 import com.erickvazquezs.mantenteencontacto.utils.permissions.PermissionExplanationProvider
-
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment() {
 
@@ -42,6 +35,7 @@ class MapsFragment : Fragment() {
     private val permissionsViewModel: MapsPermissionsViewModel by viewModels()
     private var fineLocationPermissionGranted = false
     private var backgroundLocationPermissionGranted = false
+    private var coarseLocationPermissionGranted = false
     private var permissionsToRequest = mutableListOf<String>()
     private val permissionsLauncher =  registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -126,11 +120,16 @@ class MapsFragment : Fragment() {
         backgroundLocationPermissionGranted =
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
 
+        coarseLocationPermissionGranted = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
         if (!fineLocationPermissionGranted)
             permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION)
 
         if(!backgroundLocationPermissionGranted)
             permissionsToRequest.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+        if(!coarseLocationPermissionGranted)
+            permissionsToRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION)
 
         if(permissionsToRequest.isNotEmpty()) {
             permissionsLauncher.launch(

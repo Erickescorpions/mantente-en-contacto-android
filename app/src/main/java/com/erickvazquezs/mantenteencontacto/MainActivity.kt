@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, 0)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
@@ -64,23 +64,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+
         lifecycleScope.launch {
-
             val done = dataStore.data.map { prefs -> prefs[booleanPreferencesKey(Constants.ONBOARDING)] ?: false }.first()
-            if (done) {
-                val user = FirebaseAuth.getInstance().currentUser
+            val user = FirebaseAuth.getInstance().currentUser
 
-                if (user == null) {
-                    // redirigimos al login
-                    navController.navigate(
-                        R.id.action_mainOnboardingFragment2_to_loginFragment
-                    )
-                } else {
-                    // redirigimos al home
-
-                }
+            val startDestination: Int = when {
+                !done -> R.id.mainOnboardingFragment2
+                user == null -> R.id.loginFragment
+                else -> R.id.mapsFragment
             }
-
+            graph.setStartDestination(startDestination)
+            navController.setGraph(graph, intent.extras)
         }
     }
 }

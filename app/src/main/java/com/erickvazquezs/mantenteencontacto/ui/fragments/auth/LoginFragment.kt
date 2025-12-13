@@ -92,9 +92,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun actionLoginSuccessful() {
-//        findNavController().navigate(
-//            LoginFragmentDirections.actionLoginFragmentToMoviesListFragment()
-//        )
+        findNavController().navigate(
+            LoginFragmentDirections.actionLoginFragmentToMapsFragment()
+        )
     }
 
     private fun handleErrors(task: Task<AuthResult>) {

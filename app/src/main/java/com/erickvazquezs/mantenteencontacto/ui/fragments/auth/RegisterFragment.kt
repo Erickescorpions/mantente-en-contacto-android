@@ -121,12 +121,15 @@ class RegisterFragment : Fragment() {
                 // navegamos al home
                 Log.d(Constants.LOGTAG, "Usuario ${user.email} guardado exitosamente en Firestore.")
 
-                //        findNavController().navigate(
-                //            RegisterFragmentDirections.actionRegisterFragmentToMoviesListFragment()
-                //        )
-            }.addOnFailureListener {exception ->
+                findNavController().navigate(
+                    RegisterFragmentDirections.actionRegisterFragmentToMapsFragment()
+                )
+            }.addOnFailureListener { exception ->
                 // manejamos el error aqui
-                Log.e(Constants.LOGTAG, "Error al guardar el documento del usuario: ${exception.message}")
+                Log.e(
+                    Constants.LOGTAG,
+                    "Error al guardar el documento del usuario: ${exception.message}"
+                )
             }
     }
 

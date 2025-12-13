@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
+import android.os.Build
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.provider.Settings
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -51,6 +53,15 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val DEFAULT_ZOOM = 15f
+
+    // permisos
+    private val backgroundLocationPermission = Manifest.permission.ACCESS_BACKGROUND_LOCATION
+    private val backgroundPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (!isGranted) {
+                showBackgroundPermissionDeniedWarning()
+            }
+        }
 
     private val locationPermissions = listOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -137,6 +148,40 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         }
     }
 
+    private fun requestBackgroundLocationPermission() {
+        val backgroundGranted = ContextCompat.checkSelfPermission(
+            requireContext(),
+            backgroundLocationPermission
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (backgroundGranted) {
+            return
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Permiso de Ubicación en Segundo Plano Necesario")
+                .setMessage("Para que la aplicación te avise cuando entres o salgas de un lugar registrado, necesitamos acceder a la ubicación en segundo plano. Esto garantiza que las notificaciones funcionen incluso cuando la aplicación está cerrada.")
+                .setPositiveButton("Continuar") { dialog, _ ->
+                    dialog.dismiss()
+                    backgroundPermissionLauncher.launch(backgroundLocationPermission)
+                }
+                .setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                    showBackgroundPermissionDeniedWarning()
+                }
+                .show()
+        }
+    }
+
+    private fun showBackgroundPermissionDeniedWarning() {
+        Toast.makeText(
+            requireContext(),
+            "Advertencia: El monitoreo de geocercas será limitado sin el permiso de fondo.",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
     private fun showPermissionExplanationDialog() {
         val provider = FineLocationPermissionExplanationProvider()
         MaterialAlertDialogBuilder(requireContext())
@@ -166,9 +211,12 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
             if (location != null) {
                 handleNewLocation(location)
             }
+
+            requestBackgroundLocationPermission()
         }.addOnFailureListener { e ->
             // Error al obtener la ubicación
             Log.e(Constants.LOGTAG, "Error al obtener la última ubicación", e)
+            requestBackgroundLocationPermission()
         }
     }
 

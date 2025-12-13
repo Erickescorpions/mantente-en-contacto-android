@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentMapsBinding
 import com.erickvazquezs.mantenteencontacto.utils.Constants
@@ -26,23 +27,27 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class MapsFragment : Fragment() {
-
-    private val location_permissions = listOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
+class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
     private lateinit var googleMap: GoogleMap
-    private val callback = OnMapReadyCallback { map -> googleMap = map }
+    private val callback = OnMapReadyCallback { map ->
+        googleMap = map
+        googleMap.setOnMapClickListener(this)
+    }
+    var selectedLocation: LatLng? = null
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val DEFAULT_ZOOM = 15f
 
+    private val locationPermissions = listOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
     private val permissionsLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsResult ->
             val fineGranted = permissionsResult[Manifest.permission.ACCESS_FINE_LOCATION] == true
@@ -119,7 +124,7 @@ class MapsFragment : Fragment() {
             .setMessage(provider.getExplanation(true))
             .setPositiveButton("Entendido") { dialog, _ ->
                 dialog.dismiss()
-                permissionsLauncher.launch(location_permissions.toTypedArray())
+                permissionsLauncher.launch(locationPermissions.toTypedArray())
             }
             .setNegativeButton("Cancelar") { dialog, _ ->
                 dialog.dismiss()
@@ -185,5 +190,23 @@ class MapsFragment : Fragment() {
                 Uri.fromParts("package", requireContext().packageName, null)
             )
         )
+    }
+
+    // manejando el tap
+    override fun onMapClick(latLng: LatLng) {
+        handleMapTap(latLng)
+    }
+
+    private fun handleMapTap(latLng: LatLng) {
+        googleMap.clear()
+
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title("Lugar Seleccionado")
+        )
+
+        selectedLocation = latLng
+        Log.d(Constants.LOGTAG, "Ubicación seleccionada por tap: ${latLng.latitude}, ${latLng.longitude}")
     }
 }

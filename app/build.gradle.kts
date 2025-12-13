@@ -1,8 +1,5 @@
 import java.util.Properties
 
-val properties = Properties()
-properties.load(project.rootProject.file("local.properties").inputStream())
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -25,7 +22,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders["MAPS_API_KEY"] = properties.getProperty("MAPS_API_KEY", "")
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if(localPropertiesFile.exists()){
+            localProperties.load(localPropertiesFile.inputStream())
+            val mapsApiKey = localProperties.getProperty("MAPS_API_KEY", "")
+            buildConfigField("String", "MAPS_API_KEY", "\"$mapsApiKey\"")
+            manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+        }
+
     }
 
     buildTypes {
@@ -46,6 +52,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -77,6 +84,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.7")
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(libs.places)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

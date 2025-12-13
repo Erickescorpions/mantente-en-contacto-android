@@ -12,6 +12,7 @@ constraintlayout = "2.2.1"
 navigationFragmentKtx = "2.9.5"
 firebaseFirestore = "26.0.2"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
+places = "5.1.1"
 playServicesLocation = "21.3.0"
 playServicesMaps = "19.2.0"
 
@@ -27,6 +28,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+places = { module = "com.google.android.libraries.places:places", version.ref = "places" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 

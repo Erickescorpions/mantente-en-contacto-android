@@ -1,5 +1,8 @@
 package com.erickvazquezs.mantenteencontacto.ui.fragments.locations
 
+import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +17,11 @@ import com.erickvazquezs.mantenteencontacto.databinding.FragmentAddNewPlaceBindi
 import com.erickvazquezs.mantenteencontacto.models.PlaceDto
 import com.erickvazquezs.mantenteencontacto.ui.fragments.auth.RegisterFragmentDirections
 import com.erickvazquezs.mantenteencontacto.utils.Constants
+import com.erickvazquezs.mantenteencontacto.utils.geofence.GeofenceBroadcastReceiver
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -28,6 +36,17 @@ class AddNewPlaceFragment : Fragment() {
     private var selectedLatLng: LatLng? = null
     private var selectedAddress: String? = null
 
+    private lateinit var geofencingClient: GeofencingClient
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val flags = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
+        val intent = Intent(requireContext(), GeofenceBroadcastReceiver::class.java)
+        PendingIntent.getBroadcast(requireContext(), 0, intent, flags)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +58,8 @@ class AddNewPlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        geofencingClient = LocationServices.getGeofencingClient(requireActivity())
 
         selectedLatLng = args.location
         selectedAddress = args.adress
@@ -109,19 +130,7 @@ class AddNewPlaceFragment : Fragment() {
             .add(place)
             .addOnSuccessListener { documentReference ->
                 place.id = documentReference.id
-
-                Log.d(
-                    Constants.LOGTAG,
-                    "Lugar ${place.name} guardado exitosamente. ID: ${documentReference.id}"
-                )
-                Toast.makeText(
-                    requireContext(),
-                    "Lugar '${place.name}' guardado.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                findNavController().popBackStack()
-
+                addGeofence(place)
             }.addOnFailureListener { exception ->
                 Log.e(
                     Constants.LOGTAG,
@@ -133,6 +142,45 @@ class AddNewPlaceFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun addGeofence(place: PlaceDto) {
+        if (place.id == null) {
+            Log.e(Constants.LOGTAG, "Error al registrar la Geocerca")
+            return
+        }
+
+        val geofence = Geofence.Builder()
+            .setRequestId(place.id!!)
+            .setCircularRegion(
+                place.latitude,
+                place.longitude,
+                place.radius.toFloat()
+            )
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+            .setLoiteringDelay(5000)
+            .build()
+
+        val geofencingRequest = GeofencingRequest.Builder()
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .addGeofence(geofence)
+            .build()
+
+        geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
+            addOnSuccessListener {
+                Log.d(Constants.LOGTAG, "Geocerca ${place.name} ID:${place.id} añadida con éxito.")
+                Toast.makeText(requireContext(), "Geocerca Activada: ${place.name}", Toast.LENGTH_SHORT).show()
+
+                findNavController().popBackStack()
+            }
+            addOnFailureListener { e ->
+                Log.e(Constants.LOGTAG, "Error al agregar Geocerca localmente: ${e.message}", e)
+                Toast.makeText(requireContext(), "Error al activar la Geocerca local.", Toast.LENGTH_LONG).show()
+                findNavController().popBackStack()
+            }
+        }
     }
 
 }

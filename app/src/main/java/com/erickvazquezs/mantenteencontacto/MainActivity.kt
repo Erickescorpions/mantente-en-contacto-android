@@ -20,6 +20,7 @@ import com.erickvazquezs.mantenteencontacto.databinding.ActivityMainBinding
 import com.erickvazquezs.mantenteencontacto.ui.fragments.auth.LoginFragmentDirections
 import com.erickvazquezs.mantenteencontacto.ui.fragments.onboarding.MainOnboardingFragment
 import com.erickvazquezs.mantenteencontacto.utils.Constants
+import com.erickvazquezs.mantenteencontacto.utils.notifications.NotificationHelper
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
+
+        // creamos el canal de notificaciones
+        NotificationHelper.createNotificationChannel(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.container

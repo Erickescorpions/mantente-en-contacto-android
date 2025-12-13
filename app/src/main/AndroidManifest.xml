@@ -16,6 +16,9 @@
         android:name="android.hardware.location.gps"
         android:required="false" />
 
+<!--    permisos para notificaciones -->
+<!--    TODO: solicitar permiso -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -25,6 +28,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MantenteEnContacto">
+
+        <!--  Componente para escuchar eventos globales o mensajes de otras apps o servicios  -->
+        <receiver
+            android:name=".utils.geofence.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -52,4 +52,6 @@
     <string name="error_invalid_credentials">Las credenciales ingresadas no son validas.</string>
     <string name="error_global">Un error ha ocurrido, por favor intentalo de nuevo después.</string>
     <string name="onboarding_get_started_btn_start">Comenzar</string>
+
+    <string name="map_permission_denied">El mapa no se puede cargar sin acceso a tu ubicación. Por favor, concede los permisos de ubicación en la configuración de la aplicación.</string>
 </resources>

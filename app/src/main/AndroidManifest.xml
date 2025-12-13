@@ -8,7 +8,6 @@
 <!--    permisos para ubicacion -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 <!--    No es necesario tener un sensor gps para que se use la app -->
     <uses-feature

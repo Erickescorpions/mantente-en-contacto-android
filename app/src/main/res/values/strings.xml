@@ -61,4 +61,7 @@
     <string name="tv_login">Do you already have an account? Sign in.</string>
     <string name="error_email_already_in_use">The email is already linked to an account.</string>
     <string name="error_password_confirmation_required">Password confirmation is required</string>
+
+    <string name="map_permission_denied">The map cannot be loaded without access to your location. Please grant location permissions in the app settings.</string>
+
 </resources>

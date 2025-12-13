@@ -11,39 +11,44 @@ El sistema busca hacerlo de manera **no intrusiva** y **respetuosa con la privac
 
 ---
 
-## Caracteristicas implementadas en esta entrega
+## Características Implementadas en la Versión Actual
+Esta entrega integra la funcionalidad de ubicación y persistencia de datos.
 
-1. **Onboarding**
-   - Ahora funciona con **ViewPager2** y un **Dots Indicator** para mostrar el progreso de las pantallas.
+1. 🗺️ **Geocercas y Ubicación**
+- **Google Maps SDK**: Implementación del mapa para la visualización y selección de lugares.
+- **Selección de Lugares**: Permite seleccionar y registrar lugares con un toque (Tap) en el mapa.
+- **Registro de Lugares**: Los lugares seleccionados se guardan en Firestore.
+- **Geofencing Core**: Se genera una Geocerca por cada lugar registrado para detectar la entrada o salida del usuario en el rango definido.
+- **Permisos de Ubicación**: Se solicitan los permisos de Localización en tiempo real y Background Location para la detección continua de Geocercas.
 
-2. **Navegación**
-   - Se reemplazó la navegación con **Intents y Activities** por el **Navigation Component** con **Fragments**.
+2. 📱 **Interfaz y Navegación**  
+- **Bottom Navigation**: Se agregó un Bottom Navigation Bar para facilitar el acceso a las vistas principales (e.g., Mapa, Lugares, Configuración).
+- **Vistas**: Se implementó una vista específica para el registro de nuevos lugares.
 
-3. **Registro con Firebase**
-   - Se implementó el registro de cuenta usando **Firebase Authentication**.
-   - Los datos del usuario se guardan en **Firestore**.
+3. 🛡️ **Autenticación y Persistencia**  
+- **Registro/Inicio de Sesión**: Implementación completa de la autenticación de usuarios con correo electronico y contraseña usando Firebase Authentication.
+- **Persistencia de datos**: Los datos de usuario y los lugares registrados se guardan en Firestore.
+- **DataStore**: Se usa Preferences DataStore para controlar que el onboarding se muestre solo la primera vez.
 
-4. **DataStore**
-   - Se usa **Preferences DataStore** para mostrar el onboarding solo la primera vez que se abre la app.
-
----
-
-## Alcances logrados
-
-- **Implementación de Firebase:**  
-  Permite enfocar el desarrollo en la funcionalidad principal de la aplicación, facilitando la integración del backend y el manejo de usuarios.
-
-- **Navigation Component:**  
-  Mejora la estructura interna de la app al simplificar la navegación entre pantallas y mantener un flujo más ordenado.
-
-- **Autenticación:**  
-  Es un punto clave para la aplicación, ya que la idea principal es permitir que el usuario comparta con familiares o amigos información sobre su ubicación o si ha llegado a un destino.
+4. 🔔 **Notificaciones**
+- **Notificaciones Locales**: Implementación de un sistema de notificaciones para alertar al usuario sobre eventos (por ejemplo, al entrar o salir de una geocerca).
+   - Nota: Actualmente, la habilitación de las notificaciones debe ser manual por parte del usuario.
 
 ---
+## Características Previstas para la Versión Final
+1. 🧑‍🤝‍🧑 **Red de Contactos y Grupos**
+- **Creación de Grupos**: Permitir a los usuarios crear y nombrar grupos (ej. "Familia", "Trabajo").
+- **Sistema de Amistad/Solicitudes**: Implementación de solicitudes de amistad para que los usuarios puedan pertenecer a los grupos.
+- **Compartir Lugares**: Habilitar la funcionalidad para compartir los lugares registrados con los grupos creados.
 
-## Características previstas para la versión final
+2. 🔔 **Notificaciones Automatizadas e Inteligentes**
+- **Envío Automático de Notificaciones**: Implementación del envío de notificaciones a los miembros de los grupos cuando el usuario principal llegue a un destino registrado.
+- **Solicitud de Permisos**: Manejo automático de la solicitud de permisos de notificación al instalar la app (en lugar de la habilitación manual).
 
-- Registrar lugares en un **mapa (Google Maps)**.  
-- Crear **grupos** con otros usuarios de la app.  
-- Compartir **lugares registrados** con esos grupos.  
-- Enviar **notificaciones automáticas** cuando algún usuario llegue a un destino previamente registrado.
+3. ⚙️ **Configuración Avanzada de Geocercas**
+- **Frecuencia de Alerta**: Permitir al usuario definir la frecuencia con la que se enviará el aviso de llegada:
+   - Cada vez que llegue.
+   - Solo la primera vez que llegue.
+   - Cuando llegue y cuando se vaya.
+- **Gestión Inteligente de Geocercas**: Dependiendo de la configuración, desactivar y activar automáticamente las Geocercas para optimizar el consumo de batería y la lógica.
+- **Recuperación de Cuenta**: Manejar la lógica para permitir la creación o restauración de Geocercas la primera vez que se instala la aplicación en un nuevo dispositivo, si el usuario ya tenía una cuenta existente.

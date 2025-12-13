@@ -15,10 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentMapsBinding
+import com.erickvazquezs.mantenteencontacto.models.PlaceDto
 import com.erickvazquezs.mantenteencontacto.utils.Constants
 import com.erickvazquezs.mantenteencontacto.utils.permissions.FineLocationPermissionExplanationProvider
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -40,9 +43,11 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
     private val callback = OnMapReadyCallback { map ->
         googleMap = map
         googleMap.setOnMapClickListener(this)
+        viewModel.startSubscription()
     }
     var selectedLocation: LatLng? = null
     private var selectedPlaceMarker: Marker? = null
+    private val viewModel: MapsViewModel by viewModels()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val DEFAULT_ZOOM = 15f
@@ -104,6 +109,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
                 )
             )
         }
+
+        observeViewModel()
     }
 
     override fun onDestroyView() {
@@ -224,5 +231,44 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         selectedLocation = latLng
         // mostramos el boton
         binding.btnAddPlace.visibility = View.VISIBLE
+    }
+
+    private fun observeViewModel() {
+        viewModel.registeredPlaces.observe(viewLifecycleOwner) { placesList ->
+            if (::googleMap.isInitialized) {
+                googleMap.clear()
+
+                placesList.forEach { place ->
+                    drawPlaceMarker(place)
+                }
+
+                selectedPlaceMarker?.let { marker ->
+                    selectedPlaceMarker = googleMap.addMarker(
+                        MarkerOptions()
+                            .position(marker.position)
+                            .title(marker.title)
+                    )
+                }
+            }
+        }
+    }
+
+    private fun drawPlaceMarker(place: PlaceDto) {
+        val latLng = LatLng(place.latitude, place.longitude)
+
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title(place.name)
+                .snippet(place.address)
+        )
+
+        googleMap.addCircle(
+            CircleOptions()
+                .center(latLng)
+                .radius(place.radius.toDouble())
+                .strokeColor(resources.getColor(R.color.yellow, null))
+                .fillColor(resources.getColor(R.color.light_yellow, null) and 0x33FFFFFF)
+        )
     }
 }

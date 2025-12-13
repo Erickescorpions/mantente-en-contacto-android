@@ -41,5 +41,22 @@
         android:id="@+id/mapsFragment"
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.locations.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_addNewPlaceFragment"
+            app:destination="@id/addNewPlaceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPlaceFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.locations.AddNewPlaceFragment"
+        android:label="fragment_add_new_place"
+        tools:layout="@layout/fragment_add_new_place" >
+        <argument
+            android:name="location"
+            app:argType="com.google.android.gms.maps.model.LatLng" />
+        <argument
+            android:name="adress"
+            app:argType="string"
+            android:defaultValue="Dirección no especificada" />
+    </fragment>
 </navigation>

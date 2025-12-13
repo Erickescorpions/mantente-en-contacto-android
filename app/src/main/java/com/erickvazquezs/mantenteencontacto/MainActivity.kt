@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
             graph.setStartDestination(startDestination)
             navController.setGraph(graph, intent.extras)
+            bottomNav.setupWithNavController(navController)
         }
     }
 }

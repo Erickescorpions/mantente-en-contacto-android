@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentMapsBinding
@@ -91,6 +92,16 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        binding.btnAddPlace.setOnClickListener {
+            // ocultamos el boton
+            binding.btnAddPlace.visibility = View.GONE
+            // nos movemos a la nueva vista
+            findNavController().navigate(
+                MapsFragmentDirections.actionMapsFragmentToAddNewPlaceFragment(
+                    location = selectedLocation!!
+                )
+            )
+        }
     }
 
     override fun onDestroyView() {
@@ -207,6 +218,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         )
 
         selectedLocation = latLng
-        Log.d(Constants.LOGTAG, "Ubicación seleccionada por tap: ${latLng.latitude}, ${latLng.longitude}")
+        // mostramos el boton
+        binding.btnAddPlace.visibility = View.VISIBLE
     }
 }

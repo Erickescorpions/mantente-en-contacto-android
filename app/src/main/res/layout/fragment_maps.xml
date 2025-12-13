@@ -17,15 +17,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_destination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/add_24px"
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab_add_destination"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:src="@drawable/add_24px"-->
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_search"
@@ -49,6 +49,8 @@
             android:singleLine="true" />
 
     </androidx.cardview.widget.CardView>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/permission_deny_ui"
@@ -95,5 +97,19 @@
             app:layout_constraintTop_toBottomOf="@+id/error_message_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnAddPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Add new Place"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginBottom="40dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,14 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.onboarding.PrivacyFragment">
 
+    <ImageView
+        android:id="@+id/ivPrivacy"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/privacy_img"
+
+        app:layout_constraintTop_toBottomOf="@id/gl1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
     <TextView
         android:id="@+id/tvDescription"
 
-        app:layout_constraintTop_toTopOf="@id/gl1"
+        app:layout_constraintTop_toBottomOf="@id/ivPrivacy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
         android:text="@string/onboarding_privacy_desc1"
+        android:layout_marginTop="50dp"
 
         style="@style/MainTitle"
 
@@ -44,7 +56,7 @@
         android:layout_height="wrap_content"
 
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.1"
 
         />
 

@@ -16,6 +16,7 @@
         app:layout_constraintBottom_toBottomOf="@id/layoutAuthButtons"
 
         android:text="@string/onboarding_get_started_desc1"
+        style="@style/MainTitle"
 
         android:layout_marginTop="20dp"
         android:gravity="center"

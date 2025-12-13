@@ -25,14 +25,6 @@ import kotlinx.coroutines.launch
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                readOnboardingComplete().collect { completed ->
-                    if (completed) {
-//                        findNavController().navigate(R.id.action_mainOnboardingFragment2_to_registerFragment)
-                    }
-                }
-            }
-
             val fragmentList = arrayListOf(WelcomeFragment(), PlacesAndContactsFragment(), PrivacyFragment(),
                 GetStartedFragment())
             val dotsIndicator = binding.dots
@@ -54,12 +46,5 @@ import kotlinx.coroutines.launch
         override fun onDestroyView() {
             super.onDestroyView()
             _binding = null
-        }
-
-        private fun readOnboardingComplete(): Flow<Boolean> {
-            return requireContext().dataStore.data
-                .map { preferences ->
-                    preferences[booleanPreferencesKey(Constants.ONBOARDING)] ?: false
-                }
         }
     }

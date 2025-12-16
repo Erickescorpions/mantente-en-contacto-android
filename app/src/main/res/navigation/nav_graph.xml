@@ -85,4 +85,9 @@
             app:popUpToInclusive="true"
             />
     </fragment>
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.sharing.AddContactFragment"
+        android:label="fragment_add_contact"
+        tools:layout="@layout/fragment_add_contact" />
 </navigation>

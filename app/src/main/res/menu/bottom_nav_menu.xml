@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_map"
         android:title="Mapa" />
     <item
-        android:id="@+id/groups_dest"
+        android:id="@+id/addContactFragment"
         android:icon="@drawable/ic_group"
         android:title="Grupos" />
     <item

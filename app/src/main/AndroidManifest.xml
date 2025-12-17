@@ -16,6 +16,12 @@
         android:name="android.hardware.location.gps"
         android:required="false" />
 
+<!--   Se va a poder ejecutar aunque no tenga camara porque puede seleccionar la imagen desde
+ galeria -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 <!--    permisos para notificaciones -->
 <!--    TODO: solicitar permiso -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />

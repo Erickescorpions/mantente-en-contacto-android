@@ -33,7 +33,7 @@
         app:cardElevation="0dp"
         >
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/ivProfilePhoto"
             android:layout_width="150dp"
             android:layout_height="150dp"
             tools:src="@tools:sample/avatars" />
@@ -41,6 +41,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
+        android:id="@+id/btnChoosePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -52,6 +53,7 @@
         />
 
     <Button
+        android:id="@+id/btnContinue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

@@ -45,11 +45,8 @@
             app:popUpToInclusive="true"
             />
         <action
-            android:id="@+id/action_registerFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true"
-            />
+            android:id="@+id/action_registerFragment_to_profilePhotoSelectionFragment"
+            app:destination="@id/profilePhotoSelectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -90,4 +87,13 @@
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.sharing.AddContactFragment"
         android:label="fragment_add_contact"
         tools:layout="@layout/fragment_add_contact" />
+    <fragment
+        android:id="@+id/profilePhotoSelectionFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.account.ProfilePhotoSelectionFragment"
+        android:label="fragment_profile_photo_selection"
+        tools:layout="@layout/fragment_profile_photo_selection" >
+        <action
+            android:id="@+id/action_profilePhotoSelectionFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
 </navigation>

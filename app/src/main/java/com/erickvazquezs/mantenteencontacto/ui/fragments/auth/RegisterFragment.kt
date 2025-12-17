@@ -122,7 +122,7 @@ class RegisterFragment : Fragment() {
                 Log.d(Constants.LOGTAG, "Usuario ${user.email} guardado exitosamente en Firestore.")
 
                 findNavController().navigate(
-                    RegisterFragmentDirections.actionRegisterFragmentToMapsFragment()
+                    RegisterFragmentDirections.actionRegisterFragmentToProfilePhotoSelectionFragment()
                 )
             }.addOnFailureListener { exception ->
                 // manejamos el error aqui

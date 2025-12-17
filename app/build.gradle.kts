@@ -86,6 +86,8 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.places)
 
+    implementation("com.github.bumptech.glide:glide:5.0.5")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

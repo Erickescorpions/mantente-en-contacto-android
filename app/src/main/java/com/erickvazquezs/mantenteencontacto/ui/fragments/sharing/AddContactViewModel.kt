@@ -27,24 +27,13 @@ class AddContactViewModel(private val db: FirebaseFirestore): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun searchUsers(query: String) {
+    fun searchUsers(query: String, currentUserId: String, currentFriends: List<String>) {
         if (query.length < 2) {
             _usersFound.value = emptyList()
             return
         }
 
         _isLoading.value = true
-
-        val currentUser = Firebase.auth.currentUser
-        val currentUserId = currentUser?.uid ?: return
-        var currentFriends = emptyList<String>()
-        db.collection("users").document(currentUserId).get()
-            .addOnSuccessListener { currentUserSnapshot ->
-                currentFriends = currentUserSnapshot.get("friends") as? List<String> ?: emptyList()
-            }.addOnFailureListener {
-                _isLoading.value = false
-                _usersFound.value = emptyList()
-            }
 
         db.collection("users")
             .whereGreaterThanOrEqualTo("username", query)

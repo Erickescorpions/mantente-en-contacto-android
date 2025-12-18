@@ -32,6 +32,8 @@ class AddContactFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var viewModel: AddContactViewModel
     private var searchJob: Job? = null
+    private var currentFriends = emptyList<String>()
+    private var currentUserId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class AddContactFragment : Fragment() {
 
         val factory = AddContactViewModelFactory(db)
         viewModel = ViewModelProvider(this, factory).get(AddContactViewModel::class.java)
+        loadCurrentFriends()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +55,11 @@ class AddContactFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         db = Firebase.firestore
 
+        currentUserId = Firebase.auth.uid
+        if (currentUserId == null) {
+            return
+        }
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -63,9 +71,9 @@ class AddContactFragment : Fragment() {
                 delay(300L)
 
                 if (query.length > 1) {
-                    viewModel.searchUsers(query)
+                    viewModel.searchUsers(query, currentUserId!!, currentFriends)
                 } else {
-                    viewModel.searchUsers("")
+                    viewModel.searchUsers("", currentUserId!!, currentFriends)
                 }
             }
         }
@@ -77,6 +85,7 @@ class AddContactFragment : Fragment() {
                     addFriend(Firebase.auth.currentUser?.uid!!, selectedFriend.id!!) { success: Boolean ->
                         if (success) {
                             Toast.makeText(context, "Amigo agregado", Toast.LENGTH_SHORT).show()
+                            findNavController().navigateUp()
                         } else {
                             Toast.makeText(context, "Error al agregar amigo", Toast.LENGTH_SHORT).show()
                         }
@@ -110,5 +119,18 @@ class AddContactFragment : Fragment() {
                 onComplete?.invoke(false)
             }
     }
+
+    private fun loadCurrentFriends() {
+        val currentUserId = Firebase.auth.currentUser?.uid ?: return
+
+        db.collection("users").document(currentUserId).get()
+            .addOnSuccessListener { snapshot ->
+                currentFriends = snapshot.get("friends") as? List<String> ?: emptyList()
+            }
+            .addOnFailureListener {
+                currentFriends = emptyList()
+            }
+    }
+
 
 }

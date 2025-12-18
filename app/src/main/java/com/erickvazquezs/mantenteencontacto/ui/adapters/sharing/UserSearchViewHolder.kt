@@ -1,6 +1,7 @@
 package com.erickvazquezs.mantenteencontacto.ui.adapters.sharing
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -27,6 +28,14 @@ class UserSearchViewHolder(
             .load(user.avatarUrl)
             .error(R.drawable.placeholder_user)
             .into(binding.ivUserAvatar)
+
+        binding.btnAddContact.visibility = View.VISIBLE
+        binding.tvFriends.visibility = View.GONE
+
+        if (user.isFriend) {
+            binding.btnAddContact.visibility = View.GONE
+            binding.tvFriends.visibility = View.VISIBLE
+        }
     }
 
     companion object {

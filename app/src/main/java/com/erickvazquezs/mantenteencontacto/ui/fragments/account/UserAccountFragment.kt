@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentUserAccountBinding
 import com.erickvazquezs.mantenteencontacto.models.UserDto
@@ -44,7 +45,9 @@ class UserAccountFragment : Fragment() {
                     val user = document.toObject(UserDto::class.java)
 
                     if (user != null) {
-//                        binding.ivAvatar.setImageResource(user.avatarUrl)
+                        Glide.with(this)
+                            .load(user.avatarUrl)
+                            .into(binding.ivProfilePhoto)
                         binding.tvEmail.text = user.email
                         binding.tvGreeting.text = "Hola ${user.username}!"
                     }

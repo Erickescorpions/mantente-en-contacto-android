@@ -27,14 +27,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     private val fullScreenDestinations = setOf(
         R.id.mainOnboardingFragment2,
         R.id.loginFragment,
-        R.id.registerFragment
+        R.id.registerFragment,
+        R.id.profilePhotoSelectionFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

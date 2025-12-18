@@ -100,5 +100,9 @@
         android:id="@+id/friendsListFragment"
         android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.sharing.FriendsListFragment"
         android:label="fragment_friends_list"
-        tools:layout="@layout/fragment_friends_list" />
+        tools:layout="@layout/fragment_friends_list" >
+        <action
+            android:id="@+id/action_friendsListFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+    </fragment>
 </navigation>

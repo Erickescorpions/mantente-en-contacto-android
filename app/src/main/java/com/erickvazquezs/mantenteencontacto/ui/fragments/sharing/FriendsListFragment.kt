@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentFriendsListBinding
@@ -44,33 +45,41 @@ class FriendsListFragment : Fragment() {
 
         val currentUserId = Firebase.auth.uid
 
-        if (currentUserId != null) {
-            viewModel.getFriends(currentUserId)
-
-            viewModel.friends.observe(viewLifecycleOwner) { friends ->
-                if (friends.isEmpty()) {
-                    binding.llNoFriendsFound.visibility = View.VISIBLE
-                    binding.rvFriendsList.visibility = View.GONE
-                } else {
-                    binding.llNoFriendsFound.visibility = View.GONE
-                    binding.rvFriendsList.visibility = View.VISIBLE
-
-                    binding.rvFriendsList.apply {
-                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                        adapter = FriendAdapter(friends)
-                    }
-                }
-            }
-
-            viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-                binding.progressBar.visibility =
-                    if (loading) View.VISIBLE else View.GONE
-            }
-
-        } else {
+        if (currentUserId == null) {
             // TODO: manejar error cuando llegue a suceder que llega aqui sin estar autenticado
+            return
         }
 
+        viewModel.getFriends(currentUserId)
+
+        viewModel.friends.observe(viewLifecycleOwner) { friends ->
+            if (friends.isEmpty()) {
+                binding.llNoFriendsFound.visibility = View.VISIBLE
+                binding.rvFriendsList.visibility = View.GONE
+            } else {
+                binding.llNoFriendsFound.visibility = View.GONE
+                binding.rvFriendsList.visibility = View.VISIBLE
+
+                binding.rvFriendsList.apply {
+                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    adapter = FriendAdapter(friends)
+                }
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
+            binding.progressBar.visibility =
+                if (loading) View.VISIBLE else View.GONE
+        }
+
+        binding.flBtnAddFriends.setOnClickListener { goToAddFriend() }
+        binding.btnAddFriends.setOnClickListener { goToAddFriend() }
+    }
+
+    private fun goToAddFriend() {
+        findNavController().navigate(
+            FriendsListFragmentDirections.actionFriendsListFragmentToAddContactFragment()
+        )
     }
 
     override fun onDestroyView() {

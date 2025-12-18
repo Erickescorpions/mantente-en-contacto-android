@@ -121,6 +121,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
             )
         }
 
+        binding.btnUserLocation.setOnClickListener {
+            getDeviceLocation()
+        }
+
         observeViewModel()
     }
 

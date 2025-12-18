@@ -31,11 +31,10 @@ class AddContactViewModel(private val db: FirebaseFirestore): ViewModel() {
         }
 
         _isLoading.value = true
-        val lowerCaseQuery = query.lowercase()
 
         db.collection("users")
-            .whereGreaterThanOrEqualTo("username", lowerCaseQuery)
-            .whereLessThanOrEqualTo("username", lowerCaseQuery + '\uf8ff')
+            .whereGreaterThanOrEqualTo("username", query)
+            .whereLessThanOrEqualTo("username", query + '\uf8ff')
             .limit(10)
             .get()
             .addOnSuccessListener { results ->
@@ -49,7 +48,6 @@ class AddContactViewModel(private val db: FirebaseFirestore): ViewModel() {
             .addOnFailureListener {
                 _isLoading.value = false
                 _usersFound.value = emptyList()
-                // TODO: Manejar y registrar el error
             }
     }
 }

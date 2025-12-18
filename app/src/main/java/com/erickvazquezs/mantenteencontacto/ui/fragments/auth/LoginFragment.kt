@@ -37,9 +37,17 @@ class LoginFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.btnLogin.setOnClickListener {
+            binding.btnLogin.isEnabled = false
+            binding.progressBar.visibility = View.VISIBLE
+
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            if (validate(email, password)) return@setOnClickListener
+            if (validate(email, password)) {
+                binding.btnLogin.isEnabled = true
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
+
             login(email, password)
         }
 
@@ -87,6 +95,8 @@ class LoginFragment : Fragment() {
                     actionLoginSuccessful()
                 } else {
                     handleErrors(authResult)
+                    binding.btnLogin.isEnabled = true
+                    binding.progressBar.visibility = View.GONE
                 }
             }
     }

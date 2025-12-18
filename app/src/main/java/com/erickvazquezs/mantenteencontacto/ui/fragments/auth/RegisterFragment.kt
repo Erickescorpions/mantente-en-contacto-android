@@ -41,6 +41,10 @@ class RegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.btnRegister.setOnClickListener {
+
+            binding.btnRegister.isEnabled = false
+            binding.progressBar.visibility = View.VISIBLE
+
             val email = binding.etEmail.text.toString()
             val name = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
@@ -53,7 +57,11 @@ class RegisterFragment : Fragment() {
                 "passwordConfirmation" to passwordConfirmation
             )
 
-            if (validate(data)) return@setOnClickListener
+            if (validate(data)) {
+                binding.btnRegister.isEnabled = true
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
 
             createUser(email, password, name)
         }
@@ -83,7 +91,6 @@ class RegisterFragment : Fragment() {
             errors = true
         }
 
-        // Validación del correo electrónico
         if (email.isEmpty()) {
             binding.etEmail.error = getString(R.string.error_email_required)
             errors = true
@@ -92,7 +99,6 @@ class RegisterFragment : Fragment() {
             errors = true
         }
 
-        // Validación de la contraseña
         if (password.isEmpty()) {
             binding.etPassword.error = getString(R.string.error_password_required)
             errors = true
@@ -137,7 +143,6 @@ class RegisterFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, psw)
             .addOnCompleteListener { authResult ->
                 if (authResult.isSuccessful) {
-                    // creamos al usuario
                     val firebaseUser = authResult.result?.user
                     if (firebaseUser != null) {
                         val user = UserDto(
@@ -152,6 +157,8 @@ class RegisterFragment : Fragment() {
                     }
                 } else {
                     handleErrors(authResult)
+                    binding.btnRegister.isEnabled = true
+                    binding.progressBar.visibility = View.GONE
                 }
             }
     }

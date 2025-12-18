@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.sharing.FriendsListFragment">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        style="@style/MainTitle"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"
+
+        android:text="Contactos" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFriendsList"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/llNoFriendsFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:visibility="gone"
+
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_people_outline"
+            app:tint="@color/blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aún no tienes contactos"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agrega amigos para compartir tu ubicación cuando llegues a tus destinos"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:textAlignment="center"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:id="@+id/btnAddFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Buscar contactos"
+            android:textAllCaps="false"
+            android:paddingHorizontal="24dp"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -96,4 +96,9 @@
             android:id="@+id/action_profilePhotoSelectionFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/friendsListFragment"
+        android:name="com.erickvazquezs.mantenteencontacto.ui.fragments.sharing.FriendsListFragment"
+        android:label="fragment_friends_list"
+        tools:layout="@layout/fragment_friends_list" />
 </navigation>

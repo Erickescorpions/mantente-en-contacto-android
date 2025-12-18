@@ -8,7 +8,8 @@ data class UserDto(
     val username: String = "",
     val email: String = "",
     val avatarUrl: String? = null,
-    val createdAt: Date = Date()
+    val createdAt: Date = Date(),
+    val friends: List<String> = emptyList()
 ) {
     constructor() : this(id = null)
 }

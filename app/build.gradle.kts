@@ -88,6 +88,12 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:5.0.5")
 
+    // Image Picker
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+
+    // Firebase storage
+    implementation("com.google.firebase:firebase-storage")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

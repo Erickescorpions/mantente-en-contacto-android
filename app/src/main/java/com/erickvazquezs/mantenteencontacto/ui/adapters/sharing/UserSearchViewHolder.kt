@@ -3,6 +3,8 @@ package com.erickvazquezs.mantenteencontacto.ui.adapters.sharing
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.ItemUserSearchBinding
 import com.erickvazquezs.mantenteencontacto.models.UserDto
 
@@ -21,7 +23,10 @@ class UserSearchViewHolder(
         currentItem = user
 
         binding.tvUsername.text = user.username
-        // TODO: user Glide para traer la imagen del usuario
+        Glide.with(binding.root)
+            .load(user.avatarUrl)
+            .error(R.drawable.placeholder_user)
+            .into(binding.ivUserAvatar)
     }
 
     companion object {

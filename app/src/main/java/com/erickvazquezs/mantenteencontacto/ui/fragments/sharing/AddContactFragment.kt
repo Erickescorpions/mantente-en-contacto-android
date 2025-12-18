@@ -59,7 +59,7 @@ class AddContactFragment : Fragment() {
             searchJob = lifecycleScope.launch {
                 delay(300L)
 
-                if (query.length > 2) {
+                if (query.length > 1) {
                     viewModel.searchUsers(query)
                 } else {
                     viewModel.searchUsers("")
@@ -77,7 +77,7 @@ class AddContactFragment : Fragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            // TODO: Mostrar/Ocultar el ProgressBar (binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE)
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 

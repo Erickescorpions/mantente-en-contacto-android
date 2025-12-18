@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.erickvazquezs.mantenteencontacto.models.UserDto
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AddContactViewModelFactory(private val db: FirebaseFirestore) : ViewModelProvider.Factory {
@@ -40,9 +42,16 @@ class AddContactViewModel(private val db: FirebaseFirestore): ViewModel() {
             .addOnSuccessListener { results ->
                 _isLoading.value = false
 
+                val currentUserId = Firebase.auth.currentUser?.uid
+
                 val usersList = results.documents.mapNotNull { document ->
-                    document.toObject(UserDto::class.java)
-                }
+                        document.toObject(UserDto::class.java)?.apply {
+                            id = document.id
+                        }
+                    }.filter { user ->
+                        user.id != currentUserId
+                    }
+
                 _usersFound.value = usersList
             }
             .addOnFailureListener {

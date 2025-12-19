@@ -13,6 +13,7 @@ import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentRegisterBinding
 import com.erickvazquezs.mantenteencontacto.models.UserDto
 import com.erickvazquezs.mantenteencontacto.utils.Constants
+import com.erickvazquezs.mantenteencontacto.utils.notifications.TokenManager
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.auth.AuthResult
@@ -126,6 +127,7 @@ class RegisterFragment : Fragment() {
             .addOnSuccessListener { e ->
                 // navegamos al home
                 Log.d(Constants.LOGTAG, "Usuario ${user.email} guardado exitosamente en Firestore.")
+                TokenManager.trySaveToken()
 
                 findNavController().navigate(
                     RegisterFragmentDirections.actionRegisterFragmentToProfilePhotoSelectionFragment()

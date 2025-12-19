@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentLoginBinding
+import com.erickvazquezs.mantenteencontacto.utils.notifications.TokenManager
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -102,6 +103,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun actionLoginSuccessful() {
+        TokenManager.trySaveToken()
+
         findNavController().navigate(
             LoginFragmentDirections.actionLoginFragmentToMapsFragment()
         )

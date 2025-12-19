@@ -4,14 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.erickvazquezs.mantenteencontacto.models.PlaceDto
 import com.erickvazquezs.mantenteencontacto.utils.Constants
-import com.erickvazquezs.mantenteencontacto.utils.notifications.NotificationHelper
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
+import com.google.firebase.functions.functions
 
 class GeofenceBroadcastReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -45,22 +45,31 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
     }
 
     private fun sendNotification(context: Context, transitionType: String, placeId: String) {
-        // TODO: Crear notificacion y obtener datos del lugar desde Firestore
+        if (transitionType != "Entrada") return
+
         val db = Firebase.firestore
+        val user = FirebaseAuth.getInstance().currentUser ?: run {
+            Log.e(Constants.LOGTAG, "Usuario no autenticado")
+            return
+        }
 
-        db.collection("places").document(placeId).get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    val place = documentSnapshot.toObject(PlaceDto::class.java)
-                    val placeName = place?.name ?: "Lugar Desconocido"
+        Log.d(Constants.LOGTAG, "Llamando notifyArrival para placeId=$placeId")
 
-                    NotificationHelper.showGeofenceNotification(context, placeName, transitionType, placeId)
-                } else {
-                    Log.e(Constants.LOGTAG, "Error al obtener el lugar")
-                }
-            }.addOnFailureListener { e ->
-                Log.e(Constants.LOGTAG, "Error al obtener el lugar: ${e.message}", e)
-                NotificationHelper.showGeofenceNotification(context, "Lugar (Error BD)", transitionType, placeId)
+        Firebase.functions
+            .getHttpsCallable("notifyArrival")
+            .call(mapOf("placeId" to placeId))
+            .addOnSuccessListener { result ->
+                Log.d(
+                    Constants.LOGTAG,
+                    "notifyArrival OK: ${result.data}"
+                )
+            }
+            .addOnFailureListener { e ->
+                Log.e(
+                    Constants.LOGTAG,
+                    "Error llamando notifyArrival",
+                    e
+                )
             }
     }
 }

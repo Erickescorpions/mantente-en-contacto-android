@@ -2,9 +2,11 @@ package com.erickvazquezs.mantenteencontacto
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -21,7 +23,9 @@ import com.erickvazquezs.mantenteencontacto.ui.fragments.auth.LoginFragmentDirec
 import com.erickvazquezs.mantenteencontacto.ui.fragments.onboarding.MainOnboardingFragment
 import com.erickvazquezs.mantenteencontacto.utils.Constants
 import com.erickvazquezs.mantenteencontacto.utils.notifications.NotificationHelper
+import com.erickvazquezs.mantenteencontacto.utils.notifications.TokenManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -40,16 +44,34 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
 
         // creamos el canal de notificaciones
         NotificationHelper.createNotificationChannel(this)
+
+        // obtenemos el token de FCM
+        FirebaseMessaging.getInstance().token
+            .addOnSuccessListener { token ->
+                Log.d(Constants.LOGTAG, "FCM token obtenido: $token")
+
+                TokenManager.cacheToken(token)
+                TokenManager.trySaveToken()
+            }
+            .addOnFailureListener { e ->
+                Log.e(Constants.LOGTAG, "Error obteniendo FCM token", e)
+            }
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.container

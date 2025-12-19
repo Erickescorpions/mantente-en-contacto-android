@@ -73,7 +73,7 @@ dependencies {
     implementation (libs.androidx.navigation.ui.ktx)
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
     // Analytics
     implementation("com.google.firebase:firebase-analytics")
     // Auth
@@ -94,6 +94,11 @@ dependencies {
     // Firebase storage
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-messaging")
+
+    // okhttp
+    implementation("com.google.firebase:firebase-functions")
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

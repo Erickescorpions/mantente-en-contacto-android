@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentUserAccountBinding
 import com.erickvazquezs.mantenteencontacto.models.UserDto
 import com.erickvazquezs.mantenteencontacto.utils.Constants
+import com.erickvazquezs.mantenteencontacto.utils.session.SessionManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -32,39 +32,38 @@ class UserAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUser = auth.currentUser
-        val db = Firebase.firestore
+        val currentUser = auth.currentUser ?: null
 
-        if (currentUser != null) {
-            val docRef = db.collection("users").document(currentUser.uid)
-
-            docRef.get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Document found in the offline cache
-                    val document = task.result
-                    val user = document.toObject(UserDto::class.java)
-
-                    if (user != null) {
-                        Glide.with(this)
-                            .load(user.avatarUrl)
-                            .into(binding.ivProfilePhoto)
-                        binding.tvEmail.text = user.email
-                        binding.tvGreeting.text = "Hola ${user.username}!"
-                    }
-                } else {
-                    Log.d(Constants.LOGTAG, "Error al traer informacion del usuario: ", task.exception)
-                }
-            }
-        } else {
-            // no esta autenticado, lo mandamos al onboarding
-//            findNavController().navigate(R.id.action_userAccountFragment_to_mainOnboardingFragment2)
+        if (currentUser == null) {
+            goToLogin()
+            return
         }
 
+        val db = Firebase.firestore
+        val docRef = db.collection("users").document(currentUser.uid)
+
+        docRef.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                val user = document.toObject(UserDto::class.java)
+
+                if (user != null) {
+                    Glide.with(this)
+                        .load(user.avatarUrl)
+                        .into(binding.ivProfilePhoto)
+                    binding.tvEmail.text = user.email
+                    binding.tvGreeting.text = "Hola ${user.username}!"
+                }
+            } else {
+                Log.d(Constants.LOGTAG, "Error al traer informacion del usuario: ")
+            }
+        }
+
+
         binding.btnLogout.setOnClickListener {
-            Firebase.auth.signOut()
-            findNavController().navigate(
-                UserAccountFragmentDirections.actionUserAccountFragmentToLoginFragment()
-            )
+            SessionManager.logout() {
+                goToLogin()
+            }
         }
     }
 
@@ -79,5 +78,11 @@ class UserAccountFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun goToLogin() {
+        findNavController().navigate(
+            UserAccountFragmentDirections.actionUserAccountFragmentToLoginFragment()
+        )
     }
 }

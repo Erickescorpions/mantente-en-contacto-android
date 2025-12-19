@@ -46,10 +46,12 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         googleMap = map
         googleMap.setOnMapClickListener(this)
         viewModel.startSubscription()
+        getDeviceLocation()
     }
     var selectedLocation: LatLng? = null
     private var selectedPlaceMarker: Marker? = null
     private val viewModel: MapsViewModel by viewModels()
+    private var mapInitialized = false
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val DEFAULT_ZOOM = 15f
@@ -103,26 +105,35 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
 
     override fun onStart() {
         super.onStart()
-        checkAndRequestPermission()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        checkAndRequestPermission()
+
         binding.btnAddPlace.setOnClickListener {
-            // ocultamos el boton
+            val location = selectedLocation
+            if (location == null) {
+                Toast.makeText(requireContext(), "Selecciona un lugar en el mapa", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             binding.btnAddPlace.visibility = View.GONE
-            // nos movemos a la nueva vista
+
             findNavController().navigate(
-                MapsFragmentDirections.actionMapsFragmentToAddNewPlaceFragment(
-                    location = selectedLocation!!
-                )
+                MapsFragmentDirections
+                    .actionMapsFragmentToAddNewPlaceFragment(location)
             )
         }
 
         binding.btnUserLocation.setOnClickListener {
-            getDeviceLocation()
+            if (isMapReady()) {
+                getDeviceLocation()
+            }
         }
 
         observeViewModel()
@@ -203,14 +214,21 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
     }
 
     private fun startGoogleMap() {
+        if (mapInitialized) return
+
         val mapFragment =
-            childFragmentManager.findFragmentById(binding.mapContainer.id) as SupportMapFragment?
+            childFragmentManager.findFragmentById(binding.mapContainer.id)
+                    as? SupportMapFragment
+
         mapFragment?.getMapAsync(callback)
-        getDeviceLocation()
+        mapInitialized = true
     }
+
 
     @SuppressLint("MissingPermission")
     private fun getDeviceLocation() {
+        if (!isMapReady()) return
+
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             if (location != null) {
                 handleNewLocation(location)
@@ -226,15 +244,13 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
 
     @SuppressLint("MissingPermission")
     private fun handleNewLocation(location: Location) {
+        if (!isMapReady()) return
+
         val currentLatLng = LatLng(location.latitude, location.longitude)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM))
         googleMap.isMyLocationEnabled = true
-
-        Log.d(
-            Constants.LOGTAG,
-            "Ubicación obtenida: ${currentLatLng.latitude}, ${currentLatLng.longitude}"
-        )
     }
+
 
     private fun showPermissionDeniedUI() {
         binding.mapContainer.visibility = View.GONE
@@ -287,7 +303,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
 
     private fun observeViewModel() {
         viewModel.registeredPlaces.observe(viewLifecycleOwner) { placesList ->
-            if (::googleMap.isInitialized) {
+            if (isMapReady()) {
                 googleMap.clear()
 
                 placesList.forEach { place ->
@@ -322,5 +338,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
                 .strokeColor(resources.getColor(R.color.yellow, null))
                 .fillColor(resources.getColor(R.color.light_yellow, null) and 0x33FFFFFF)
         )
+    }
+
+    private fun isMapReady(): Boolean {
+        return ::googleMap.isInitialized
     }
 }

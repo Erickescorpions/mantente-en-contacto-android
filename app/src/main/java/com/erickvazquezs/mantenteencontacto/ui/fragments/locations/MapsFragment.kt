@@ -26,6 +26,8 @@ import com.erickvazquezs.mantenteencontacto.models.PlaceDto
 import com.erickvazquezs.mantenteencontacto.utils.Constants
 import com.erickvazquezs.mantenteencontacto.utils.geofence.GeofenceManager
 import com.erickvazquezs.mantenteencontacto.utils.permissions.FineLocationPermissionExplanationProvider
+import com.erickvazquezs.mantenteencontacto.utils.permissions.LocationPermissionManager
+import com.erickvazquezs.mantenteencontacto.utils.permissions.LocationPermissionResult
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -68,34 +70,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
             }
         }
 
-    private val locationPermissions = listOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
-    private val permissionsLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsResult ->
-            val fineGranted = permissionsResult[Manifest.permission.ACCESS_FINE_LOCATION] == true
-            val coarseGranted =
-                permissionsResult[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-
-            val locationAccessGranted = fineGranted || coarseGranted
-
-            if (locationAccessGranted) {
-                startGoogleMap()
-            } else {
-                val permanentlyDenied = !shouldShowRequestPermissionRationale(
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) || !shouldShowRequestPermissionRationale(
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-
-                if (permanentlyDenied) {
-                    openAppSettings()
-                } else {
-                    showPermissionDeniedUI()
-                }
-            }
-        }
+    private lateinit var permissionManager: LocationPermissionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,8 +81,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+        permissionManager.check()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,7 +92,27 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         fusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        checkAndRequestPermission()
+        permissionManager = LocationPermissionManager(this) { result ->
+            when (result) {
+                LocationPermissionResult.GRANTED -> {
+                    showMapUI()
+                    startGoogleMap()
+                }
+
+                LocationPermissionResult.EXPLANATION -> {
+                    showPermissionExplanationDialog()
+                }
+
+                LocationPermissionResult.DENIED_UI -> {
+                    showPermissionDeniedUI()
+                }
+
+                LocationPermissionResult.PERMANENTLY_DENIED -> {
+                    openAppSettings()
+                }
+            }
+        }
+        permissionManager.check()
 
         binding.btnAddPlace.setOnClickListener {
             val location = selectedLocation
@@ -139,31 +135,20 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
             }
         }
 
+        binding.errorMessageTextView.text =
+            getString(R.string.map_permission_denied)
+
+        binding.btnRetry.setOnClickListener {
+
+            showPermissionExplanationDialog()
+        }
+
         observeViewModel()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun checkAndRequestPermission() {
-        val fineGranted = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-        val coarseGranted = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-
-        val locationAccessGranted = fineGranted || coarseGranted
-
-        if (locationAccessGranted) {
-            startGoogleMap()
-        } else {
-            showPermissionExplanationDialog()
-        }
     }
 
     private fun requestBackgroundLocationPermission() {
@@ -200,6 +185,20 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
         ).show()
     }
 
+    private fun showMapUI() {
+        binding.permissionDenyUi.visibility = View.GONE
+        binding.mapContainer.visibility = View.VISIBLE
+        binding.editSearchLocation.visibility = View.VISIBLE
+    }
+
+    private fun showPermissionDeniedUI() {
+        binding.mapContainer.visibility = View.GONE
+        binding.editSearchLocation.visibility = View.GONE
+        binding.permissionDenyUi.visibility = View.VISIBLE
+    }
+
+
+    // Dialogos para los permisos de ubicacion
     private fun showPermissionExplanationDialog() {
         val provider = FineLocationPermissionExplanationProvider()
         MaterialAlertDialogBuilder(requireContext())
@@ -207,7 +206,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
             .setMessage(provider.getExplanation(true))
             .setPositiveButton("Entendido") { dialog, _ ->
                 dialog.dismiss()
-                permissionsLauncher.launch(locationPermissions.toTypedArray())
+                permissionManager.request()
             }
             .setNegativeButton("Cancelar") { dialog, _ ->
                 dialog.dismiss()
@@ -255,24 +254,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
     }
 
 
-    private fun showPermissionDeniedUI() {
-        binding.mapContainer.visibility = View.GONE
-        binding.editSearchLocation.visibility = View.GONE
 
-        binding.permissionDenyUi.visibility = View.VISIBLE
-        binding.errorMessageTextView.visibility = View.VISIBLE
-        // si el permiso ya esta negado permanentemente
-
-        binding.errorMessageTextView.text =
-            getString(R.string.map_permission_denied)
-
-        binding.retryButton.setOnClickListener {
-            binding.permissionDenyUi.visibility = View.GONE
-            binding.mapContainer.visibility = View.VISIBLE
-            binding.editSearchLocation.visibility = View.VISIBLE
-            checkAndRequestPermission()
-        }
-    }
 
     private fun openAppSettings() {
         startActivity(

@@ -61,7 +61,7 @@ class UserAccountFragment : Fragment() {
 
 
         binding.btnLogout.setOnClickListener {
-            SessionManager.logout() {
+            SessionManager.logout(requireContext()) {
                 goToLogin()
             }
         }

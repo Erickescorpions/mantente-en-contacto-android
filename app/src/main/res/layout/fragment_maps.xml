@@ -67,13 +67,13 @@
             android:layout_height="100dp"
             android:src="@drawable/ic_location_off_2"
             android:tint="@color/yellow"
-            app:layout_constraintBottom_toTopOf="@+id/error_message_text_view"
+            app:layout_constraintBottom_toTopOf="@+id/tvPermissionMsg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/error_message_text_view"
+            android:id="@+id/tvPermissionMsg"
             style="@style/MainTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -85,18 +85,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/error_icon"
-            tools:text="@string/map_permission_denied" />
+            tools:text="@string/map_permission_description" />
 
         <Button
             android:id="@+id/btnRetry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Conceder Permiso"
+            android:text="@string/enable_location"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/error_message_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPermissionMsg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -100,7 +100,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
                 }
 
                 LocationPermissionResult.EXPLANATION -> {
-                    showPermissionExplanationDialog()
+                    showPermissionDeniedUI()
                 }
 
                 LocationPermissionResult.DENIED_UI -> {
@@ -112,7 +112,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
                 }
             }
         }
-        permissionManager.check()
 
         binding.btnAddPlace.setOnClickListener {
             val location = selectedLocation
@@ -135,11 +134,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
             }
         }
 
-        binding.errorMessageTextView.text =
-            getString(R.string.map_permission_denied)
-
+        binding.tvPermissionMsg.text = getString(R.string.map_permission_description)
         binding.btnRetry.setOnClickListener {
-
             showPermissionExplanationDialog()
         }
 
@@ -188,13 +184,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
     private fun showMapUI() {
         binding.permissionDenyUi.visibility = View.GONE
         binding.mapContainer.visibility = View.VISIBLE
+        binding.btnUserLocation.visibility = View.VISIBLE
     }
 
     private fun showPermissionDeniedUI() {
         binding.mapContainer.visibility = View.GONE
         binding.permissionDenyUi.visibility = View.VISIBLE
+        binding.btnUserLocation.visibility = View.GONE
     }
-
 
     // Dialogos para los permisos de ubicacion
     private fun showPermissionExplanationDialog() {

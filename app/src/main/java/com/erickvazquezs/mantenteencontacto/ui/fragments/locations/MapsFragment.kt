@@ -24,6 +24,7 @@ import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentMapsBinding
 import com.erickvazquezs.mantenteencontacto.models.PlaceDto
 import com.erickvazquezs.mantenteencontacto.utils.Constants
+import com.erickvazquezs.mantenteencontacto.utils.geofence.GeofenceManager
 import com.erickvazquezs.mantenteencontacto.utils.permissions.FineLocationPermissionExplanationProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -55,6 +56,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val DEFAULT_ZOOM = 15f
+    private var geofencesRestored = false
+
 
     // permisos
     private val backgroundLocationPermission = Manifest.permission.ACCESS_BACKGROUND_LOCATION
@@ -318,7 +321,32 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
                     )
                 }
             }
+
+            restoreGeofencesIfNeeded(placesList)
         }
+    }
+
+    private fun restoreGeofencesIfNeeded(places: List<PlaceDto>) {
+        if (geofencesRestored) return
+        if (places.isEmpty()) return
+
+        places.forEach { place ->
+            GeofenceManager.add(requireContext(), place) { success ->
+                if (success) {
+                    Log.d(
+                        Constants.LOGTAG,
+                        "Geocerca restaurada: ${place.name}"
+                    )
+                } else {
+                    Log.e(
+                        Constants.LOGTAG,
+                        "Error restaurando geocerca: ${place.name}"
+                    )
+                }
+            }
+        }
+
+        geofencesRestored = true
     }
 
     private fun drawPlaceMarker(place: PlaceDto) {

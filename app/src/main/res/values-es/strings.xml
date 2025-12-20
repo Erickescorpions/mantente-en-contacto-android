@@ -53,6 +53,20 @@
     <string name="error_global">Un error ha ocurrido, por favor intentalo de nuevo después.</string>
     <string name="onboarding_get_started_btn_start">Comenzar</string>
 
-    <string name="map_permission_descripcion">Para mostrar el mapa y saber cuándo llegas a un lugar, necesitamos acceder a tu ubicación. Pulsa "Activar ubicación" para continuar.</string>
+    <string name="map_permission_description">Para mostrar el mapa y saber cuándo llegas a un lugar, necesitamos acceder a tu ubicación. Pulsa "Activar ubicación" para continuar.</string>
     <string name="enable_location">Activar ubicación</string>
+
+    <string name="no_internet_title">Sin conexión a Internet</string>
+    <string name="no_internet_message">Para continuar usando la aplicación, revisa tu conexión a Internet e inténtalo de nuevo.</string>
+    <string name="create_account_title">Crea tu cuenta</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="username_hint">Nombre de usuario</string>
+    <string name="confirm_password_hint">Confirmar contraseña</string>
+    <string name="register_btn">Registrarse</string>
+    <string name="tv_login">¿Ya tienes una cuenta? Inicia sesión.</string>
+    <string name="error_email_already_in_use">El correo electrónico ya está asociado a una cuenta.</string>
+    <string name="error_password_confirmation_required">La confirmación de la contraseña es obligatoria</string>
+    <string name="next">Siguiente</string>
+    <string name="skip">Skip</string>
+
 </resources>

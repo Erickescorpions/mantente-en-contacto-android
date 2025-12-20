@@ -62,7 +62,7 @@
         android:layout_marginBottom="25dp"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:text="Logout"
+        android:text="@string/logout"
         android:textSize="16sp"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/red"

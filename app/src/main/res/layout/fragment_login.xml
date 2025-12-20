@@ -27,6 +27,7 @@
                 android:src="@drawable/app_icon"
                 android:layout_gravity="center"
                 android:background="@color/blue"
+                android:contentDescription="@null"
                 />
         </androidx.cardview.widget.CardView>
 

@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Busca a un contacto por su nombre de usuario">
+            android:hint="@string/user_search">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUsername"

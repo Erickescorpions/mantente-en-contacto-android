@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Agregar lugar"
+                android:text="@string/add_place_title"
                 android:textSize="22sp"
                 android:textAlignment="center" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:hint="Nombre del Lugar">
+                android:hint="@string/place_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPlaceName"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Radio (metros) - Ej. 150">
+                android:hint="@string/place_geofence_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRadius"
@@ -67,7 +67,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dirección Seleccionada:"
+                android:text="@string/selected_address"
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp"/>
 
@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Coordenadas (Lat, Lng):"
+                android:text="@string/coordinates"
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp"/>
 
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:text="Guardar Lugar"
+                android:text="@string/add_place_btn"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 />

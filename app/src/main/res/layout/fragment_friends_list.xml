@@ -21,7 +21,7 @@
         android:textAlignment="center"
         android:layout_marginBottom="20dp"
 
-        android:text="Contactos" />
+        android:text="@string/friends_list_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFriendsList"
@@ -71,12 +71,13 @@
             android:layout_height="96dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_people_outline"
+            android:contentDescription="@null"
             app:tint="@color/blue" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aún no tienes contactos"
+            android:text="@string/no_friends_message"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/blue"
@@ -86,7 +87,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Agrega amigos para compartir tu ubicación cuando llegues a tus destinos"
+            android:text="@string/no_friends_message2"
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:textAlignment="center"
@@ -96,7 +97,7 @@
             android:id="@+id/btnAddFriends"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="Buscar contactos"
+            android:text="@string/find_friends_btn"
             android:textAllCaps="false"
             android:paddingHorizontal="24dp"
             android:backgroundTint="@color/yellow"

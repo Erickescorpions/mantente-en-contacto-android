@@ -69,5 +69,26 @@
 
     <string name="no_internet_title">No Internet Connection</string>
     <string name="no_internet_message">To continue using the app, please check your internet connection and try again.</string>
-
+    <string name="places">My places</string>
+    <string name="amigos">Friends</string>
+    <string name="profile">Profile</string>
+    <string name="user_search">Search for a contact by username</string>
+    <string name="add_place_title">Add Place</string>
+    <string name="place_name">Place Name</string>
+    <string name="place_geofence_radius">Radius (meters) – e.g. 150</string>
+    <string name="selected_address">Selected Address:</string>
+    <string name="coordinates">Coordinates (Lat, Lng):</string>
+    <string name="add_place_btn">Save Place</string>
+    <string name="friends_list_title">Friends</string>
+    <string name="no_friends_message">You don\'t have any registered friends yet.</string>
+    <string name="no_friends_message2">Add friends to share your location when you arrive at your destinations.</string>
+    <string name="find_friends_btn">Find friends</string>
+    <string name="add_new_place">Add new Place</string>
+    <string name="profile_photo_title">Select an image to customize your profile</string>
+    <string name="pp_choose">Choose an image</string>
+    <string name="continue_btn">Continue</string>
+    <string name="logout">Logout</string>
+    <string name="iv_pp_desc">User profile photo</string>
+    <string name="btn_add">Add</string>
+    <string name="friends">friends</string>
 </resources>

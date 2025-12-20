@@ -1,10 +1,10 @@
-package com.erickvazquezs.mantenteencontacto.utils.permissions;
+package com.erickvazquezs.mantenteencontacto.utils.permissions
 
-import android.Manifest;
+import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.Fragment
 
 class LocationPermissionManager(
     private val fragment: Fragment,

@@ -29,7 +29,7 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
         ) {
             val triggeringGeofences = geofencingEvent.triggeringGeofences
             // request id es el id del place guardado en firebase
-            val geofenceRequestIds = triggeringGeofences?.map { it.requestId }
+            triggeringGeofences?.map { it.requestId }
 
             val transitionString = when (geofenceTransition) {
                 Geofence.GEOFENCE_TRANSITION_ENTER -> "Entrada"
@@ -47,8 +47,8 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
     private fun sendNotification(context: Context, transitionType: String, placeId: String) {
         if (transitionType != "Entrada") return
 
-        val db = Firebase.firestore
-        val user = FirebaseAuth.getInstance().currentUser ?: run {
+        Firebase.firestore
+        FirebaseAuth.getInstance().currentUser ?: run {
             Log.e(Constants.LOGTAG, "Usuario no autenticado")
             return
         }

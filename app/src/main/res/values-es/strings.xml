@@ -68,5 +68,27 @@
     <string name="error_password_confirmation_required">La confirmación de la contraseña es obligatoria</string>
     <string name="next">Siguiente</string>
     <string name="skip">Skip</string>
+    <string name="places">Mis lugares</string>
+    <string name="amigos">Amigos</string>
+    <string name="profile">Perfil</string>
+    <string name="user_search">Busca a un contacto por su nombre de usuario</string>
+    <string name="add_place_title">Agregar lugar</string>
+    <string name="place_name">Nombre del Lugar</string>
+    <string name="place_geofence_radius">Radio (metros) - Ej. 150</string>
+    <string name="selected_address">Dirección Seleccionada:</string>
+    <string name="coordinates">Coordenadas (Lat, Lng):</string>
+    <string name="add_place_btn">Guardar Lugar</string>
+    <string name="friends_list_title">Friends</string>
+    <string name="no_friends_message">No tienes amigos registrados aún</string>
+    <string name="no_friends_message2">Agrega amigos para compartir tu ubicación cuando llegues a tus destinos.</string>
+    <string name="find_friends_btn">Buscar amigos</string>
+    <string name="add_new_place">Agrega un nuevo lugar</string>
+    <string name="profile_photo_title">Selecciona una imagen para personalizar tu perfil</string>
+    <string name="pp_choose">Escoge una imagen</string>
+    <string name="continue_btn">Continuar</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="iv_pp_desc">Foto de perfil del usuario</string>
+    <string name="btn_add">Añadir</string>
+    <string name="friends">amigos</string>
 
 </resources>

@@ -188,12 +188,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMapClickListener {
     private fun showMapUI() {
         binding.permissionDenyUi.visibility = View.GONE
         binding.mapContainer.visibility = View.VISIBLE
-        binding.editSearchLocation.visibility = View.VISIBLE
     }
 
     private fun showPermissionDeniedUI() {
         binding.mapContainer.visibility = View.GONE
-        binding.editSearchLocation.visibility = View.GONE
         binding.permissionDenyUi.visibility = View.VISIBLE
     }
 

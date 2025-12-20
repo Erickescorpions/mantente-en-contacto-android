@@ -32,7 +32,7 @@ class UserAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUser = auth.currentUser ?: null
+        val currentUser = auth.currentUser
 
         if (currentUser == null) {
             goToLogin()

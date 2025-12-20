@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erickvazquezs.mantenteencontacto.R
 import com.erickvazquezs.mantenteencontacto.databinding.FragmentFriendsListBinding
 import com.erickvazquezs.mantenteencontacto.ui.adapters.sharing.FriendAdapter
+import com.erickvazquezs.mantenteencontacto.utils.permissions.NotificationPermissionManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +25,7 @@ class FriendsListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: FriendsViewModel
     private lateinit var db: FirebaseFirestore
+    private lateinit var permissionManager: NotificationPermissionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +46,27 @@ class FriendsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUserId = Firebase.auth.uid
-
-        if (currentUserId == null) {
-            // TODO: manejar error cuando llegue a suceder que llega aqui sin estar autenticado
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser == null) {
+            findNavController().navigate(
+                FriendsListFragmentDirections.actionFriendsListFragmentToLoginFragment()
+            )
             return
         }
 
-        viewModel.getFriends(currentUserId)
+        permissionManager = NotificationPermissionManager(this) { granted ->
+            if (!granted) {
+                Toast.makeText(
+                    requireContext(),
+                    "Activa las notificaciones para recibir avisos de tus amigos",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        permissionManager.requestIfNeeded()
+
+        viewModel.getFriends(currentUser.uid)
 
         viewModel.friends.observe(viewLifecycleOwner) { friends ->
             if (friends.isEmpty()) {
@@ -61,7 +77,8 @@ class FriendsListFragment : Fragment() {
                 binding.rvFriendsList.visibility = View.VISIBLE
 
                 binding.rvFriendsList.apply {
-                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     adapter = FriendAdapter(friends)
                 }
             }
@@ -76,14 +93,15 @@ class FriendsListFragment : Fragment() {
         binding.btnAddFriends.setOnClickListener { goToAddFriend() }
     }
 
-    private fun goToAddFriend() {
-        findNavController().navigate(
-            FriendsListFragmentDirections.actionFriendsListFragmentToAddContactFragment()
-        )
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun goToAddFriend() {
+        findNavController().navigate(
+            FriendsListFragmentDirections.actionFriendsListFragmentToAddContactFragment()
+        )
     }
 }

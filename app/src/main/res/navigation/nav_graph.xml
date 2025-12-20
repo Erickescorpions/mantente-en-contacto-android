@@ -104,5 +104,8 @@
         <action
             android:id="@+id/action_friendsListFragment_to_addContactFragment"
             app:destination="@id/addContactFragment" />
+        <action
+            android:id="@+id/action_friendsListFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

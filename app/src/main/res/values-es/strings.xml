@@ -90,5 +90,8 @@
     <string name="iv_pp_desc">Foto de perfil del usuario</string>
     <string name="btn_add">Añadir</string>
     <string name="friends">amigos</string>
+    <string name="add_contact_title">Busca a un amigo</string>
 
+    <string name="error_geofence">El lugar se guardó correctamente, pero no se podrán enviar notificaciones a tus amigos cuando llegues, ya que no fue posible activar la geocerca en tu dispositivo.</string>
+    <string name="place_saved">El destino %1$s se ha guardado</string>
 </resources>

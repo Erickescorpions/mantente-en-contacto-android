@@ -50,7 +50,11 @@ class ProfilePhotoSelectionFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener {
-            uploadImageAndContinue()
+            if (imageUri == null) {
+                continueToApp()
+            } else {
+                uploadImageAndContinue()
+            }
         }
     }
 

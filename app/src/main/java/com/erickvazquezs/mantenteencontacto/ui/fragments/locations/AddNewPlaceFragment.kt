@@ -111,13 +111,13 @@ class AddNewPlaceFragment : Fragment() {
                     if (success) {
                         Toast.makeText(
                             requireContext(),
-                            "El destino ${place.name} ha sido guardado",
+                            getString(R.string.place_saved, place.name),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         Toast.makeText(
                             requireContext(),
-                            "Error, este destino no podra ser notificado a tus amigos",
+                            getString(R.string.error_geofence),
                             Toast.LENGTH_LONG
                         ).show()
                     }

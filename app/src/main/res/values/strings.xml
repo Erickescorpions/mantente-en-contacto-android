@@ -91,4 +91,8 @@
     <string name="iv_pp_desc">User profile photo</string>
     <string name="btn_add">Add</string>
     <string name="friends">friends</string>
+    <string name="add_contact_title">Search a friend</string>
+
+    <string name="error_geofence">The place was saved successfully, but notifications won’t be sent to your friends when you arrive because the geofence could not be activated on your device.</string>
+    <string name="place_saved">The destination %1$s has been saved</string>
 </resources>

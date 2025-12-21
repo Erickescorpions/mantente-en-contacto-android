@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        app:title="Busca a un amigo"
+        app:title="@string/add_contact_title"
         app:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back" />
 

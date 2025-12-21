@@ -32,3 +32,58 @@ El sistema busca hacerlo de manera **no intrusiva** y **respetuosa con la privac
 4. Posibilidad de eliminar y administrar lugares y amigos previamente registrados desde la aplicación.
 5. Gestión del perfil del usuario, permitiendo modificar la imagen de perfil y actualizar el correo electrónico asociado a la cuenta.
 6. Mejora continua de la interfaz de usuario (UI) y la experiencia de usuario (UX), con el objetivo de que la aplicación sea intuitiva, clara y fácil de usar, incluso para usuarios con poca experiencia técnica.
+
+---
+
+## Descripción del logo
+El logotipo muestra dos manos estrechándose, un símbolo universal de confianza, conexión y apoyo mutuo.
+
+En Mantente en contacto, este gesto representa la esencia de la aplicación: crear vínculos más fuertes con las personas importantes para ti, sin invadir tu privacidad.
+La idea es aprovechar la tecnología para ofrecer tranquilidad a quienes te quieren, permitiéndoles saber que llegaste bien a los lugares importantes en tu día a día, sin necesidad de enviar mensajes ni compartir tu ubicación en tiempo real.
+
+---
+
+## Dependencias y librerías utilizadas
+
+### Interfaz de usuario y navegación
+- **AndroidX ConstraintLayout**  
+  Manejo flexible y eficiente de layouts en la interfaz.
+- **Dots Indicator (com.tbuonomo:dotsindicator)**  
+  Indicador visual para pantallas de onboarding.
+- **AndroidX Navigation Component (KTX)**  
+  Manejo de navegación entre fragments y control del back stack.
+- **Glide**  
+  Carga y manejo eficiente de imágenes, incluyendo imágenes de perfil.
+
+### Firebase
+- **Firebase BoM**  
+  Gestión centralizada de versiones de las dependencias de Firebase.
+- **Firebase Authentication**  
+  Autenticación de usuarios mediante correo electrónico y contraseña.
+- **Firebase Firestore**  
+  Almacenamiento y sincronización de datos en tiempo real.
+- **Firebase Cloud Messaging (FCM)**  
+  Envío y recepción de notificaciones en segundo plano.
+- **Firebase Cloud Functions**  
+  Lógica backend para el envío de notificaciones automáticas.
+- **Firebase Storage**  
+  Almacenamiento de imágenes de perfil de los usuarios.
+- **Firebase Analytics**  
+  Recolección de métricas de uso de la aplicación.
+
+### Mapas y ubicación
+- **Google Maps SDK for Android**  
+  Visualización de mapas interactivos.
+- **Google Play Services Location**  
+  Manejo de ubicación y geocercas.
+- **Google Places API**  
+  Soporte para información de lugares.
+
+### Persistencia local
+- **Preferences DataStore**  
+  Almacenamiento local para configuraciones y control del onboarding.
+
+### Multimedia
+- **ImagePicker (dhaval2404)**  
+  Selección de imágenes desde la galería o cámara para la foto de perfil.
+

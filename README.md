@@ -1,6 +1,5 @@
 # Mantente en Contacto
 
-[Video demostrativo](https://youtube.com/shorts/aV_SIPPC9AU?feature=share)
 ## Problema
 En muchas ocasiones olvidamos avisar a nuestros seres queridos que hemos llegado bien a nuestro destino — casa, trabajo, escuela, etc.  
 Aunque esta es una tarea sencilla que toma apenas unos segundos, muchas veces se pasa por alto.  
